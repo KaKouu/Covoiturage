@@ -5,7 +5,7 @@ class Division {
     private $divNum;
     private $divNom;
 
-    function __construct($ville) {
+    function __construct($division) {
         if (!empty($division)) {
             foreach ($division as $col => $value) {
                 switch ($col) {

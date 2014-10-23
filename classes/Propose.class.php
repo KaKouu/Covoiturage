@@ -87,7 +87,7 @@ class Propose {
     }
 
     public function setProPlace($proPlace) {
-        if(is_string($proPlace))
+        if(is_int($proPlace))
             $this->proPlace = $proPlace;
     }
 

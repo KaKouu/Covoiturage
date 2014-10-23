@@ -4,6 +4,7 @@ class Etudiant extends Personne {
 
     private $dep;
     private $div;
+    private $num;
 
     function __construct($etudiant) {
         if (!empty($etudiant)) {
@@ -21,6 +22,9 @@ class Etudiant extends Personne {
                 case 'div_num':
                     $this->setDiv($value);
                     break;
+                case 'per_num':
+                    $this->setNum($value);
+                    break;
                 default:
                     break;
             }
@@ -34,6 +38,10 @@ class Etudiant extends Personne {
     public function getDiv() {
         return $this->div;
     }
+    
+    public function getNum() {
+        return $this->num;
+    }
 
     public function setDep($dep) {
         if(is_int($dep))
@@ -43,6 +51,10 @@ class Etudiant extends Personne {
     public function setDiv($div) {
         if(is_int($div))
             $this->div = $div;
+    }
+    public function setNum($num) {
+        if(is_int($num))
+            $this->num = $num;
     }
 
 }
