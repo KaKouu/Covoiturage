@@ -1,6 +1,8 @@
 <?php
-
-require_once("include/header.inc.php"); 
+require_once ("include/pages/autoload.inc.php");
+require_once("include/header.inc.php");
+require_once ("include/config.inc.php");
+$bdd = new Mypdo();
  
 ?>
 <div id="corps">

@@ -7,7 +7,7 @@ class Ville {
 
     function __construct($ville) {
         if (!empty($ville)) {
-            foreach ($departement as $col => $value) {
+            foreach ($ville as $col => $value) {
                 switch ($col) {
                     case 'vil_num':
                         $this->setVilNum($value);
