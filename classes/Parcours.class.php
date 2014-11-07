@@ -14,7 +14,7 @@ class Parcours {
     }
 
     function affecteParcours($parcours) {
-        foreach ($parcours as $col => $value) {
+        foreach ($parcours as $col => $values) {
             switch ($col) {
                 case 'par_num':
                     $this->setParNum($values);
@@ -51,22 +51,22 @@ class Parcours {
     }
 
     public function setParNum($parNum) {
-        if (is_int($parNum))
+        //if (is_int($parNum))
             $this->parNum = $parNum;
     }
 
     public function setParKm($parKm) {
-        if (is_int($parKm))
+        //if (is_int($parKm))
             $this->parKm = $parKm;
     }
 
     public function setVilNum1($vilNum1) {
-        if (is_int($vilNum1))
+        //if (is_int($vilNum1))
             $this->vilNum1 = $vilNum1;
     }
 
     public function setVilNum2($vilNum2) {
-        if (is_int($vilNum2))
+        //if (is_int($vilNum2))
             $this->vilNum2 = $vilNum2;
     }
 

@@ -31,7 +31,7 @@ class Ville {
     }
 
     public function setVilNum($vilNum) {
-        if (is_int($vilNum))
+        //if(is_int($vilNum))
             $this->vilNum = $vilNum;
     }
 

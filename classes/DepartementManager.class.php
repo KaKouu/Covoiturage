@@ -15,7 +15,8 @@ class DepartementManager{
     }
     function getAllDep(){
        $departement= array();
-        $req = $this->db->prepare('SELECT * FROM departement');
+       $sql = 'SELECT * FROM departement';
+        $req = $this->db->prepare($sql);
         $req = $this->db->query($sql);
         while($dep = $req ->fetch(PDO::FETCH_OBJ))
         {

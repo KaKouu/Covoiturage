@@ -24,5 +24,24 @@ class VilleManager{
         }
         return $ville;
         $req->closeCursor();
-    }	
+    }
+    
+    function getVilleById($id) {
+        $ville = array();
+        $sql = 'SELECT * FROM ville WHERE vil_num='.$id;
+        $req = $this->db->prepare($sql);
+        $req = $this->db->query($sql);
+        $vil = $req->fetch(PDO::FETCH_OBJ);
+        return new Ville($vil);
+        $req->closeCursor();
+    }
+    function getVilleByName($name) {
+        $ville = array();
+        $sql = "SELECT * FROM ville WHERE vil_nom='".$name."'";
+        $req = $this->db->prepare($sql);
+        $req = $this->db->query($sql);
+        $vil = $req->fetch(PDO::FETCH_OBJ);
+        return new Ville($vil);
+        $req->closeCursor();
+    }
 }

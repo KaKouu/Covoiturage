@@ -6,10 +6,12 @@ $villes = $myVilleManager->getAllVille();
 <table>
     <tr><th>Numéro</th><th>Villes</th></tr>
 <?php
+$i=1;
 foreach ($villes as $values)
 {
-  echo '<tr><td>'.$values->getVilNum().'</td>';
-  echo '<tr><td>'.$values->getVilNom().'</td></tr>';
+  echo '<tr><td>'.$i.'</td>';
+  echo '<td>'.$values->getVilNom().'</td></tr>';
+  $i++;
 }
 ?>
 </table>

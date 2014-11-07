@@ -20,12 +20,23 @@ class ParcoursManager {
 
     function getAllParcours() {
         $parcours = array();
-        $sql = $this->db->prepare('SELECT * FROM parcours');
+        $sql = 'SELECT * FROM parcours';
+        $req = $this->db->prepare($sql);
         $req = $this->db->query($sql);
         while ($par = $req->fetch(PDO::FETCH_OBJ)) {
             $parcours[] = new Parcours($par);
         }
         return $parcours;
+        $req->closeCursor();
+    }
+    
+    function getByVille($ville1, $ville2) {
+        $parcours = array();
+        $sql = 'SELECT * FROM parcours WHERE vil_num1='.$ville1.' AND vil_num2='.$ville2;
+        $req = $this->db->prepare($sql);
+        $req = $this->db->query($sql);
+        $par = $req->fetch(PDO::FETCH_OBJ);
+        return $par;
         $req->closeCursor();
     }
 
