@@ -42,17 +42,17 @@ class Departement {
     }
 
     public function setDepNum($depNum) {
-        if(is_int($depNum))
+        //if(is_int($depNum))
             $this->depNum = $depNum;
     }
 
     public function setDepNom($depNom) {
-        if(is_string($depNom))
+        //if(is_string($depNom))
             $this->depNom = $depNom;
     }
 
     public function setVilNum($vilNum) {
-        if(is_int($vilNum))
+        //if(is_int($vilNum))
             $this->vilNum = $vilNum;
     }
 

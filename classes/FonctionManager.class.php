@@ -16,7 +16,8 @@ class FonctionManager{
 
     function getAllFonction() {
         $fonction = array();
-        $sql = $this->db->prepare('SELECT * FROM fonction');
+        $sql='SELECT * FROM fonction';
+        $req = $this->db->prepare($sql);
         $req = $this->db->query($sql);
         while ($fon = $req->fetch(PDO::FETCH_OBJ)) {
             $fonction[] = new Fonction($fon);

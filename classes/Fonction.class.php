@@ -29,12 +29,12 @@ class Fonction {
     }
 
     public function setNum($num) {
-        if(is_int($num))
+       // if(is_int($num))
             $this->num = $num;
     }
 
     public function setLibelle($libelle) {
-        if(is_string($libelle))
+        //if(is_string($libelle))
             $this->libelle = $libelle;
     }
 

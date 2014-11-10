@@ -18,7 +18,8 @@ class DivisionManager {
 
     function getAllDiv() {
         $division = array();
-        $req = $this->db->prepare('SELECT * FROM division');
+        $sql = 'SELECT * FROM division';
+        $req = $this->db->prepare($sql);
         $req = $this->db->query($sql);
         while ($div = $req->fetch(PDO::FETCH_OBJ)) {
             $division[] = new Division($div);

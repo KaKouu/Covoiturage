@@ -44,16 +44,16 @@ class Etudiant extends Personne {
     }
 
     public function setDep($dep) {
-        if(is_int($dep))
+       // if(is_int($dep))
             $this->dep = $dep;
     }
 
     public function setDiv($div) {
-        if(is_int($div))
+        //if(is_int($div))
             $this->div = $div;
     }
     public function setNum($num) {
-        if(is_int($num))
+        //if(is_int($num))
             $this->num = $num;
     }
 

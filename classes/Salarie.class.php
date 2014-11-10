@@ -42,17 +42,17 @@ class Salarie extends Personne{
         }
 
         public function setNum($num) {
-            if(is_int($num))
+            //if(is_int($num))
                 $this->num = $num;
         }
 
         public function setTelProf($telProf) {
-            if(is_string($telProf))
+            //if(is_string($telProf))
                 $this->telProf = $telProf;
         }
 
         public function setNumFonc($numFonc) {
-            if(is_int($numFonc))
+            //if(is_int($numFonc))
                 $this->numFonc = $numFonc;
         }
 

@@ -31,12 +31,12 @@ class Division {
     }
 
     public function setDivNum($divNum) {
-        if(is_int($divNum))
+        //if(is_int($divNum))
             $this->divNum = $divNum;
     }
 
     public function setDivNom($divNom) {
-        if(is_string($divNom))
+        //if(is_string($divNom))
             $this->divNom = $divNom;
     }
 

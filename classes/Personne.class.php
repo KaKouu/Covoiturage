@@ -74,37 +74,37 @@ class Personne {
     }
 
     public function setNum($num) {
-        if (is_int($num))
+        //if (is_int($num))
             $this->num = $num;
     }
 
     public function setNom($nom) {
-        if (is_string($nom))
+        //if (is_string($nom))
             $this->nom = $nom;
     }
 
     public function setPrenom($prenom) {
-        if (is_string($prenom))
+        //if (is_string($prenom))
             $this->prenom = $prenom;
     }
 
     public function setTel($tel) {
-        if (is_int($tel))
+        //if (is_int($tel))
             $this->tel = $tel;
     }
 
     public function setMail($mail) {
-        if (is_string($mail))
+        //if (is_string($mail))
             $this->mail = $mail;
     }
 
     public function setLogin($login) {
-        if (is_string($login))
+        //if (is_string($login))
             $this->login = $login;
     }
 
     public function setPwd($pwd) {
-        if (is_string($pwd))
+        //if (is_string($pwd))
             $this->pwd = $pwd;
     }
 
