@@ -25,4 +25,13 @@ class FonctionManager{
         return $fonction;
         $req->closeCursor();
     }
+    
+     function getFonctionById($id) {
+        $sql='SELECT * FROM fonction WHERE fon_num='.$id;
+        $req = $this->db->prepare($sql);
+        $req = $this->db->query($sql);
+        $fon = $req->fetch(PDO::FETCH_OBJ);
+        $req->closeCursor();
+        return new Fonction($fon);
+    }
 }

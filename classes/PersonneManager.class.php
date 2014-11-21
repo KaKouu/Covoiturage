@@ -17,7 +17,7 @@ class PersonneManager {
         $req->bindValue(':tel', $personne->getTel(), PDO::PARAM_STR);
         $req->bindValue(':mail', $personne->getMail(), PDO::PARAM_STR);
         $req->bindValue(':login', $personne->getLogin(), PDO::PARAM_STR);
-        $req->bindValue(':pwd', $personne->getPwd(), PDO::PARAM_STR);
+        $req->bindValue(':pwd',sha1(sha1($personne->getPwd()).SAL), PDO::PARAM_STR);
         $req->execute();
         return $this->db->lastInsertId();
     }
@@ -31,6 +31,17 @@ class PersonneManager {
         }
         return $personne;
         $req->closeCursor();
+    }
+    
+    function getPersIdentification($login, $mdp) {
+        $sql = "SELECT * FROM personne WHERE per_login ='".$login."' AND per_pwd='".sha1(sha1($mdp).SAL)."'";
+        $req = $this->db->prepare($sql);
+        $req = $this->db->query($sql);
+        $pers = $req->fetch(PDO::FETCH_OBJ);
+        $personne = new Personne($pers);
+        $req->closeCursor();
+        return $personne;
+        
     }
     
     function isEtudiant($idPersonne)

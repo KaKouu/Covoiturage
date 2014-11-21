@@ -26,5 +26,11 @@ class DepartementManager{
         $req -> closeCursor();
         
     }
+     function getDepById($id){
+       $sql = 'SELECT * FROM departement WHERE dep_num='.$id;
+        $req = $this->db->prepare($sql);
+        $req = $this->db->query($sql);
+        return new Departement($req ->fetch(PDO::FETCH_OBJ));  
+    }
 	
 }

@@ -26,8 +26,9 @@ class ParcoursManager {
         while ($par = $req->fetch(PDO::FETCH_OBJ)) {
             $parcours[] = new Parcours($par);
         }
-        return $parcours;
         $req->closeCursor();
+        return $parcours;
+       
     }
     
     function getByVille($ville1, $ville2) {
@@ -36,8 +37,35 @@ class ParcoursManager {
         $req = $this->db->prepare($sql);
         $req = $this->db->query($sql);
         $par = $req->fetch(PDO::FETCH_OBJ);
-        return $par;
         $req->closeCursor();
+        return new Parcours($par);
+       
     }
+    function getAllVilleParcours(){
+        $parcours = array();
+        $sql = 'SELECT DISTINCT vil_num1 as vil_num FROM parcours UNION SELECT DISTINCT vil_num2 as vil_num FROM parcours';
+        $req = $this->db->prepare($sql);
+        $req = $this->db->query($sql);
+        while ($par = $req->fetch(PDO::FETCH_ASSOC)) {
+            $parcours[] = $par['vil_num'];
+        }
+        $req->closeCursor();
+        return $parcours;
+        
+    }
+    function getAllVilleInParcours($ville){
+        $parcours = array();
+        $sql = 'SELECT DISTINCT vil_num1 as vil_num FROM parcours WHERE vil_num1='.$ville.' OR vil_num2='.$ville.'
+                UNION SELECT DISTINCT vil_num2 FROM parcours WHERE vil_num1='.$ville.' OR vil_num2='.$ville.'';
+        $req = $this->db->prepare($sql);
+        $req = $this->db->query($sql);
+        while ($par = $req->fetch(PDO::FETCH_ASSOC)) {
+            $parcours[] = $par['vil_num'];
+        }
+        $req->closeCursor();
+        return $parcours;
+        
+    }
+    
 
 }

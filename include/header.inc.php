@@ -28,7 +28,19 @@
 			</div>
 			</div>
 			<div id="connect">
+                            <?php
+                            if(!isset($_SESSION['PersIdentifiee']))
+                            {
+                            ?>
 				<a href="index.php?page=11">Connexion</a>
+                            <?php
+                            }
+                            else{
+                            ?>
+                                <a href="index.php?page=12">Déconnexion</a>
+                                <?php
+                            }
+                            ?>
 			</div>
 	</div>
 	

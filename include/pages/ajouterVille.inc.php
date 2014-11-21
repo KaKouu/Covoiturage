@@ -18,7 +18,7 @@ else
     );
     $maVille= new Ville($ville);
     $myVilleManager = new VilleManager($bdd);
-    if(!empty($myVilleManager->getVilleByName($_POST['nomVille'])))
+    if($myVilleManager->existeVille($_POST['nomVille']))
     {
         echo'la ville existe deja';
         ?>
