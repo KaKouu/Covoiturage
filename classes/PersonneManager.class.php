@@ -43,7 +43,35 @@ class PersonneManager {
         return $personne;
         
     }
+    function getPersByMail($mail) {
+        $sql = "SELECT * FROM personne WHERE per_mail ='".$mail."'";
+        $req = $this->db->prepare($sql);
+        $req = $this->db->query($sql);
+        $pers = $req->fetch(PDO::FETCH_OBJ);
+        $personne = new Personne($pers);
+        $req->closeCursor();
+        return $personne; 
+    }
     
+    function getPersByLogin($login) {
+        $sql = "SELECT * FROM personne WHERE per_login ='".$login."'";
+        $req = $this->db->prepare($sql);
+        $req = $this->db->query($sql);
+        $pers = $req->fetch(PDO::FETCH_OBJ);
+        $personne = new Personne($pers);
+        $req->closeCursor();
+        return $personne;   
+    }
+    function getPersByName($nom,$prenom) {
+         $sql = "SELECT * FROM personne WHERE per_nom ='".$nom."' AND per_prenom='".$prenom."'";
+        $req = $this->db->prepare($sql);
+        $req = $this->db->query($sql);
+        $pers = $req->fetch(PDO::FETCH_OBJ);
+        $personne = new Personne($pers);
+        $req->closeCursor();
+        return $personne;
+        
+    }
     function isEtudiant($idPersonne)
     {
         $sql = 'SELECT * FROM etudiant WHERE per_num='.$idPersonne;
