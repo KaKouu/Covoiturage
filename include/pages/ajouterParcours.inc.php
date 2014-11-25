@@ -51,7 +51,7 @@ if (empty($_POST['km']) or empty($_POST['ajouter']) or empty($_POST['ville1']) o
         );
         $myParcoursManager = new ParcoursManager($bdd);
         $myParcours = new Parcours($parcours);
-        if (empty($myParcoursManager->getByVille($_POST['ville1'], $_POST['ville2'])) and empty($myParcoursManager->getByVille($_POST['ville2'], $_POST['ville1']))) {
+        if ($myParcoursManager->getByVille($_POST['ville1'], $_POST['ville2'])->getParNum()==NULL) {
             $myParcoursManager->add($myParcours);
             echo 'Le parcours a été ajouté.';
         } else

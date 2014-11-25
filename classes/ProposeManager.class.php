@@ -30,6 +30,11 @@ class ProposeManager{
         return $propose;
         $req->closeCursor();
     }
+    function deletePropositionById($id){
+        $sql = 'DELETE FROM propose WHERE per_num =' . $id;
+        $req = $this->db->prepare($sql);
+        $req->execute();
+    }
 	
 
 }

@@ -67,32 +67,26 @@ class Propose {
     }
 
     public function setParNum($parNum) {
-        if(is_int($parNum))
             $this->parNum = $parNum;
     }
 
     public function setPerNum($perNum) {
-        if(is_int($perNum))
             $this->perNum = $perNum;
     }
 
     public function setProDate($proDate) {
-        if(is_string($proDate))
             $this->proDate = $proDate;
     }
 
     public function setProTime($proTime) {
-        if(is_string( $proTime))
             $this->proTime = $proTime;
     }
 
     public function setProPlace($proPlace) {
-        if(is_int($proPlace))
             $this->proPlace = $proPlace;
     }
 
     public function setProSens($proSens) {
-        if(is_string($proSens))
             $this->proSens = $proSens;
     }
 

@@ -7,7 +7,7 @@ if (isset($_POST['statut']) or isset($_POST['etudiant']) or isset($_POST['salari
         //verification si la personne n'exite pas dans la base
         $personneControle = new PersonneManager($bdd);
         if ($personneControle->getPersByLogin($_POST['login'])->getNum() != NULL) {
-            //par le pseudo
+            //par le login
             echo '<p>Le login existe déja</p>';
         } elseif ($personneControle->getPersByMail($_POST['mail'])->getNum() != NULL) {
             //par le mail
@@ -37,11 +37,11 @@ if (isset($_POST['statut']) or isset($_POST['etudiant']) or isset($_POST['salari
                 <form method="POST" action="#">
                     <select name="departement" id="departement">
                         <option value="">Selectionner un département</option>
-                <?php
-                foreach ($departements as $values) {
-                    echo '<option value="' . $values->getDepNum() . '">' . $values->getDepNom() . '</option>' . "\n";
-                }
-                ?>
+                        <?php
+                        foreach ($departements as $values) {
+                            echo '<option value="' . $values->getDepNum() . '">' . $values->getDepNom() . '</option>' . "\n";
+                        }
+                        ?>
                     </select>
                     <select name="division" id="division">
                         <option value="">Selectionner votre classe</option>
@@ -53,42 +53,50 @@ if (isset($_POST['statut']) or isset($_POST['etudiant']) or isset($_POST['salari
                     </select>
                     <input type="submit" name="etudiant" value="Valider">
                 </form>
-                        <?php
-                    } else {
-                        $myFonctionManager = new FonctionManager($bdd);
-                        $fonction = $myFonctionManager->getAllFonction();
-                        ?>
+                <?php
+            } else {
+                $myFonctionManager = new FonctionManager($bdd);
+                $fonction = $myFonctionManager->getAllFonction();
+                ?>
                 <form method="POST" action="#">
                     <input type="tel" name="sal_telprof" >
                     <select name="fonction" id="fonction">
                         <option value="0">Selectionner votre fonction</option>
-                <?php
-                foreach ($fonction as $values) {
-                    echo '<option value="' . $values->getNum() . '">' . $values->getLibelle() . '</option>' . "\n";
-                }
-                ?>
+                        <?php
+                        foreach ($fonction as $values) {
+                            echo '<option value="' . $values->getNum() . '">' . $values->getLibelle() . '</option>' . "\n";
+                        }
+                        ?>
                     </select>
 
                     <input type="submit" name="salarie" value="Valider">
                 </form>
-                        <?php
-                    }
-                }
-            } elseif (isset($_POST['etudiant'])) {
-                $myEtudiantManager = new EtudiantManager($bdd);
-                $_SESSION['personne']['dep_num'] = $_POST['departement'];
-                $_SESSION['personne']['div_num'] = $_POST['division'];
-                $myEtudiant = new Etudiant($_SESSION['personne']);
-                $myEtudiantManager->add($myEtudiant);
-            } else {
-                $mySalarieManager = new SalarieManager($bdd);
-                $_SESSION['personne']['sal_telprof'] = $_POST['sal_telprof'];
-                $_SESSION['personne']['fon_num'] = $_POST['fonction'];
-                $mySalarie = new Salarie($_SESSION['personne']);
-                $mySalarieManager->add($mySalarie);
+                <?php
             }
-        } else {
-            ?>      
+        }
+    } elseif (isset($_POST['etudiant'])) {
+        $personneControle = new PersonneManager($bdd);
+        //on vertifie si la personne n'existe pas de 2 façon
+        if ($personneControle->getPersIdentification($_SESSION['personne']['per_login'], $_SESSION['personne']['per_pwd'])->getNum() == NULL and $personneControle->getPersByMail($_SESSION['personne']['per_mail'])->getNum() == NULL) {
+            $myEtudiantManager = new EtudiantManager($bdd);
+            $_SESSION['personne']['dep_num'] = $_POST['departement'];
+            $_SESSION['personne']['div_num'] = $_POST['division'];
+            $myEtudiant = new Etudiant($_SESSION['personne']);
+            $myEtudiantManager->add($myEtudiant);
+        }
+    } else {
+         $personneControle = new PersonneManager($bdd);
+        //on vertifie si la personne n'existe pas de 2 façons
+        if ($personneControle->getPersIdentification($_SESSION['personne']['per_login'], $_SESSION['personne']['per_pwd'])->getNum() == NULL and $personneControle->getPersByMail($_SESSION['personne']['per_mail'])->getNum() == NULL) {
+            $mySalarieManager = new SalarieManager($bdd);
+            $_SESSION['personne']['sal_telprof'] = $_POST['sal_telprof'];
+            $_SESSION['personne']['fon_num'] = $_POST['fonction'];
+            $mySalarie = new Salarie($_SESSION['personne']);
+            $mySalarieManager->add($mySalarie);
+        }
+    }
+} else {
+    ?>      
     <form method="POST" action="#">
         <label for="nom">Nom : </label>
         <input type="text" name="nom" id="nom" required>

@@ -27,5 +27,15 @@ class DivisionManager {
         return $division;
         $req->closeCursor();
     }
+    
+    function getDivById($id) {
+        $sql = "SELECT * FROM division WHERE div_num=".$id;
+        $req = $this->db->prepare($sql);
+        $req = $this->db->query($sql);
+        $div = $req->fetch(PDO::FETCH_ASSOC);
+        $req->closeCursor();
+        return new Division($div);
+        
+    }
 
 }

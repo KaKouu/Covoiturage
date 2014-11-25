@@ -33,7 +33,7 @@ class ParcoursManager {
     
     function getByVille($ville1, $ville2) {
         $parcours = array();
-        $sql = 'SELECT * FROM parcours WHERE vil_num1='.$ville1.' AND vil_num2='.$ville2;
+        $sql = 'SELECT * FROM parcours WHERE (vil_num1='.$ville1.' AND vil_num2='.$ville2.') OR (vil_num2='.$ville1.' AND vil_num1='.$ville2.')';
         $req = $this->db->prepare($sql);
         $req = $this->db->query($sql);
         $par = $req->fetch(PDO::FETCH_OBJ);

@@ -29,11 +29,14 @@ if (isset($_POST['valider']))
         if($_POST['reponse'] == ($asdfmovie1[$_POST['nb1']]+$asdfmovie1[$_POST['nb2']]))
         {
  
-            $myPersonneManager = new PersonneManager($bdd);
+              $myPersonneManager = new PersonneManager($bdd);
              $personne = $myPersonneManager->getPersIdentification($_POST['login'], $_POST['passwd']);
-             if ($personne != NULL){
+             if ($personne->getNum() != NULL){
                  $_SESSION['PersIdentifiee'] = $personne;
                  echo "Vous êtes connecté ".$_SESSION['PersIdentifiee']->getPrenom()." ".$_SESSION['PersIdentifiee']->getNom();
+             }
+             else{
+                 echo "<p>Erreur d'authentification</p>";
              }
         }
         else{
