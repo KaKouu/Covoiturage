@@ -1,6 +1,5 @@
 <?php
 class ProposeManager{
-
     private $db;
 
     function __construct($db) {
