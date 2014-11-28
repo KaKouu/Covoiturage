@@ -37,6 +37,7 @@
                             }
                             else{
                             ?>
+                                Utilisateur : <b><?php echo  $_SESSION['PersIdentifiee']->getNom() ;?></b>
                                 <a href="index.php?page=12">Déconnexion</a>
                                 <?php
                             }
