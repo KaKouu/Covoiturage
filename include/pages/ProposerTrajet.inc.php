@@ -15,18 +15,17 @@ if (!isset($_SESSION['PersIdentifiee'])) {
     if (isset($_POST['vil_depart'])) {
         //la ville de depart à été selectionné
         if ($_POST['vil_depart'] != '') {
-            $villesParcours = $myTrajetManager->getAllVilleInParcours($_POST['vil_depart']);
             ?>
             <p>Votre de ville de départ :<b> <?php echo $myVilleManager->getVilleById($_POST['vil_depart'])->getVilNom(); ?></b></p>
             <form action="#" method="POST" id="form_Tajet">
                 <label for='vil_arrive'>Ville d'arrivée : </label>
                 <select name="vil_arrive" id="vil_arrive">
-                    <option value="">Selectionner une ville de départ</option>
+                    <option value="">Selectionner une ville d'arrivé</option>
                     <?php
+                    $villesParcours = $myTrajetManager->getAllVilleInParcours($_POST['vil_depart']);
                     foreach ($villesParcours as $values) {
-                        if ($values != $_POST['vil_depart']) {
-                            $ville = $myVilleManager->getVilleById($values);
-                            echo '<option value="' . $values . '">' . $ville->getVilNom() . ' </option>' . "\n";
+                        if ($values->getVilNum() != $_POST['vil_depart']) {
+                            echo '<option value="' . $values->getVilNum() . '">' . $values->getVilNom() . ' </option>' . "\n";
                         }
                     }
                     ?>
@@ -55,17 +54,15 @@ if (!isset($_SESSION['PersIdentifiee'])) {
         } else {
             $date_depart = $_POST['date_depart'];
             $date = explode('-', str_replace("/", "-", $date_depart));
-
             if ($_POST['nb_place'] <= 0) {
                 echo '<p>Vous ne pouvez pas faire du covoiturage tout seul accepter au moins une personne</p>';
             }else if (count($date) < 2 or count($date) > 3) {
                 echo "<p>Votre format de date est mauvaise</p>";
             }
-            else if (date("d-m-Y", strtotime(str_replace("/", "-", $date_depart))) < date("d-m-Y")) {
+            else if (date("Y-m-d", strtotime(str_replace("/", "-", $date_depart))) < date("Y-m-d")) {
                 echo "<p>Vous ne pouvez pas covoiturer à une date antérieur à aujourd'hui</p>";
             }else{
                 $parcours = $myTrajetManager->getByVille($_POST['ville_depart'], $_POST['vil_arrive']);
-                var_dump($parcours);
                 if($parcours->getVilNum1()== $_POST['ville_depart']){
                     $sens=0;
                 }
@@ -100,8 +97,7 @@ if (!isset($_SESSION['PersIdentifiee'])) {
                 <option value="">Selectionner une ville de départ</option>
                 <?php
                 foreach ($villesParcours as $values) {
-                    $ville = $myVilleManager->getVilleById($values);
-                    echo '<option value="' . $values . '">' . $ville->getVilNom() . ' </option>' . "\n";
+                    echo '<option value="' . $values->getVilNum() . '">' . $values->getVilNom() . ' </option>' . "\n";
                 }
                 ?>
             </select>

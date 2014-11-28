@@ -43,11 +43,15 @@ class ParcoursManager {
     }
     function getAllVilleParcours(){
         $parcours = array();
-        $sql = 'SELECT DISTINCT vil_num1 as vil_num FROM parcours UNION SELECT DISTINCT vil_num2 as vil_num FROM parcours';
+        $sql = 'SELECT DISTINCT vil_num1 as vil_num, vil_nom 
+                    FROM parcours p JOIN ville v ON p.vil_num1=v.vil_num 
+                UNION 
+                SELECT DISTINCT vil_num2 as vil_num, vil_nom  
+                    FROM parcours p JOIN ville v ON p.vil_num2=v.vil_num';
         $req = $this->db->prepare($sql);
         $req = $this->db->query($sql);
         while ($par = $req->fetch(PDO::FETCH_ASSOC)) {
-            $parcours[] = $par['vil_num'];
+            $parcours[] = new Ville($par);
         }
         $req->closeCursor();
         return $parcours;
@@ -55,12 +59,17 @@ class ParcoursManager {
     }
     function getAllVilleInParcours($ville){
         $parcours = array();
-        $sql = 'SELECT DISTINCT vil_num1 as vil_num FROM parcours WHERE vil_num1='.$ville.' OR vil_num2='.$ville.
-                ' UNION SELECT DISTINCT vil_num2 FROM parcours WHERE vil_num1='.$ville.' OR vil_num2='.$ville.'';
+        $sql = 'SELECT DISTINCT vil_num1 as vil_num ,vil_nom
+                    FROM parcours p JOIN ville v ON p.vil_num1=v.vil_num 
+                    WHERE vil_num1='.$ville.' OR vil_num2='.$ville.
+                ' UNION SELECT DISTINCT vil_num2 as vil_num ,vil_nom 
+                    FROM parcours  p 
+                    JOIN ville v ON p.vil_num2=v.vil_num 
+                    WHERE vil_num1='.$ville.' OR vil_num2='.$ville.'';
         $req = $this->db->prepare($sql);
         $req = $this->db->query($sql);
         while ($par = $req->fetch(PDO::FETCH_ASSOC)) {
-            $parcours[] = $par['vil_num'];
+            $parcours[] = new Ville($par);
         }
         $req->closeCursor();
         return $parcours;

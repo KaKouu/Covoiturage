@@ -7,6 +7,7 @@ if (!isset($_SESSION['PersIdentifiee'])) {
     <?php
 } else {
     if (isset($_POST['supprimer'])) {
+        //on lui demande si il veux vraiment supprimer ses données
         ?>
         <p>Voulez vous vraiment supprimer vos données ? <br>
             <i>Attention cette action ne pourra etre reversible.</i></p>
@@ -16,20 +17,24 @@ if (!isset($_SESSION['PersIdentifiee'])) {
         </form>
         <?php
     } else if (isset($_POST['oui'])) {
+        //l'utilisateur à confirmé la suppression , on enclenche la procédure !
         $myPropositionManager = new ProposeManager($bdd);
         $myPersonneManager = new PersonneManager($bdd);
         //suppresion de tous les trajets ajoué par la personne
  
-        if($myPersonneManager->isEtudiant($_SESSION['PersIdentifiee'])){
+        //Vérification du statut
+        if($myPersonneManager->isEtudiant($_SESSION['PersIdentifiee']->getNum())){
             $myEtudiantManager=new EtudiantManager($bdd);
             //Suppression des information au niveau de l'étudiant
         }else{
             $mySalarieManager = new SalarieManager($bdd);
             //supression les informations au niveau du salarie
         }
-        //enfin suppression des information de personne
+        //enfin suppression des informations de la personne
+        
         
     } else if (isset($_POST['non'])) {
+        //on redirige vers la page d'accueil'
         header("location:index.php?page=0");
     } else {
         ?>

@@ -102,22 +102,6 @@ if (!isset($_SESSION['PersIdentifiee'])) {
         <br>
         <input type="submit" name="authentification" value="Mofifier">
     </form>
-    <h2>Modifier votre statut</h2>
-    <form>
-    <?php
-    if ($personneControle->isEtudiant($_SESSION['PersIdentifiee']->getNum())) {
-        //on affiche les information relative a un étudiant 
-        $myEtudiantManager = new EtudiantManager($bdd);
-        $myDepartementManager = new DepartementManager($bdd);
-        $myDivisionManager = new DivisionManager($bdd);
-        $edutiant = $myEtudiantManager->getEtuById($_SESSION['PersIdentifiee']->getNum());
-        echo"<p>Votre statut : Etudiant</p>";
-        echo "<p>Votre dépatement : " . $myDepartementManager->getDepById($edutiant->getDep())->getDepNom() . " </p>";
-        echo "<p>Votre niveau d'étude : " . $myDivisionManager->getDivById($edutiant->getDiv())->getDivNom() . " </p>";
-    }
-    ?>
-        <input type="submit" name="status" value="Modifier" >
-    </form>
     <?php
 }
 ?>

@@ -35,6 +35,76 @@ class ProposeManager{
         $req = $this->db->prepare($sql);
         $req->execute();
     }
+    
+    function getAllVilleDepart(){
+        $villes= array();
+        $sql="SELECT DISTINCT vil_num1 AS vil_num ,vil_nom
+                FROM propose p 
+                JOIN parcours par ON p.par_num = par.par_num 
+                JOIN ville v ON par.vil_num1=v.vil_num 
+                WHERE pro_sens = 0
+            UNION
+            SELECT DISTINCT vil_num2 AS vil_num ,vil_nom
+                FROM propose p 
+                JOIN parcours par ON p.par_num = par.par_num 
+                JOIN ville v ON par.vil_num2=v.vil_num 
+                WHERE pro_sens = 1";
+        $req=$this->db->prepare($sql);
+        $req = $this->db->query($sql);
+         while ($ville = $req->fetch(PDO::FETCH_ASSOC)) {
+            $villes[] = new Ville($ville);
+        }
+        return $villes;
+    }
+    
+    function getVillesArrive($idVille){
+        $villes= array();
+        $sql="SELECT DISTINCT vil_num2 AS vil_num ,vil_nom
+                FROM propose p 
+                JOIN parcours par ON p.par_num = par.par_num 
+                JOIN ville v ON par.vil_num2=v.vil_num 
+                WHERE pro_sens = 0 AND vil_num1=".$idVille."
+            UNION
+            SELECT DISTINCT vil_num1 AS vil_num ,vil_nom
+                FROM propose p 
+                JOIN parcours par ON p.par_num = par.par_num 
+                JOIN ville v ON par.vil_num1=v.vil_num 
+                WHERE pro_sens = 1 AND vil_num2=".$idVille;
+        $req=$this->db->prepare($sql);
+        $req = $this->db->query($sql);
+         while ($ville = $req->fetch(PDO::FETCH_ASSOC)) {
+            $villes[] = new Ville($ville);
+            print_r($ville);
+        }
+        return $villes;
+    }
+    function getPropositionByVille($vDepart,$vArrive){
+        $sql="SELECT * FROM propose p 
+                JOIN parcours par ON p.par_num = par.par_num 
+                WHERE vil_num1 = ".$vDepart." AND vil_num2 =  ".$vArrive." AND pro_sens = 0
+            UNION
+            SELECT * FROM propose p 
+                JOIN parcours par ON p.par_num = par.par_num 
+                WHERE vil_num1 = ".$vArrive." AND vil_num2 =  ".$vDepart." AND pro_sens = 1";
+        $req=$this->db->prepare($sql);
+        $req = $this->db->query($sql);
+         while ($proposition = $req->fetch(PDO::FETCH_ASSOC)) {
+            $villes[] = new Ville($ville);
+            print_r($ville);
+        }
+        return $villes;
+    }
 	
+    /*
+     SELECT * FROM
+(SELECT p.par_num, per_num AS personne, vil_num1 AS depart, vil_num2 AS arrive , pro_date AS date, pro_time AS heure FROM propose p 
+	JOIN parcours par ON p.par_num = par.par_num 
+    WHERE vil_num1 = 10 AND vil_num2 = 11 AND pro_sens = 0
+UNION
+SELECT p.par_num, per_num, vil_num1 AS depart, vil_num2 AS arrive , pro_date, pro_time FROM propose p 
+	JOIN parcours par ON p.par_num = par.par_num 
+    WHERE vil_num1 = 10 AND vil_num2 = 11 AND pro_sens = 1) t
 
+JOIN personne p ON p.per_num = t.personne JOIN ville v1 ON v1.vil_num =t.depart JOIN ville v2 ON v2.vil_num =t.arrive 
+     */
 }

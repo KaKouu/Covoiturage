@@ -3,14 +3,22 @@
 <?php
 $myPersonneManager = new PersonneManager($bdd);
 if (isset($_GET['id'])) {
+    //page personnalié d'une personne avec toutes ses information relative
+    //on récupère sont statut
     if ($myPersonneManager->isEtudiant($_GET['id'])) {
         //si la personne est un étudiant
         $myEtudiantManager = new EtudiantManager($bdd);
+        // manager pour la ville ou étudie l'étudiant
         $myVilleManager = new VilleManager($bdd);
+        // manager pour le département
         $myDepartementManager = new DepartementManager($bdd);
+        //on récupère les information relative à l'étudiant
         $etudiant = $myEtudiantManager->getEtuById($_GET['id']);
+        // on récupère le département
         $departement = $myDepartementManager->getDepById($etudiant->getDep());
+        // la ville du département
         $ville = $myVilleManager->getVilleById($departement->getVilNum());
+        //affichage des information
         ?>
         <table>
             <tr>
@@ -66,6 +74,7 @@ if (isset($_GET['id'])) {
         </tr>
 
     <?php
+    //recupération de la liste de toutes les personnes
     $personnes = $myPersonneManager->getAllPers();
     foreach ($personnes as $value) {
         echo '<tr><td><b><a href=?page=2&id=' . $value->getNum() . "> " . $value->getNum() . "</a></b></td>";
