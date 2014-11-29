@@ -2,30 +2,30 @@
 <?php
 if (!isset($_SESSION['PersIdentifiee'])) {
     ?>
-    <p>Vous devez être connecté pour pouvoir  supprimer les information de votre profils</p> 
+    <p>Vous devez être connecté pour pouvoir supprimer les informations de votre profil</p> 
     <a href="index.php?page=11">Connexion</a>
     <?php
 } else {
     if (isset($_POST['supprimer'])) {
-        //on lui demande si il veux vraiment supprimer ses données
+        //on lui demande si il veut vraiment supprimer ses données
         ?>
         <p>Voulez vous vraiment supprimer vos données ? <br>
-            <i>Attention cette action ne pourra etre reversible.</i></p>
+            <i>Attention cette action est irreversible.</i></p>
         <form action="#" method="POST">
             <input type="submit" name="oui" id="oui" value="Oui">
             <input type="submit" name="non" id="non" value="Non">
         </form>
         <?php
     } else if (isset($_POST['oui'])) {
-        //l'utilisateur à confirmé la suppression , on enclenche la procédure !
+        //l'utilisateur a confirmé la suppression , on enclenche la procédure !
         $myPropositionManager = new ProposeManager($bdd);
         $myPersonneManager = new PersonneManager($bdd);
-        //suppresion de tous les trajets ajoué par la personne
+        //suppression de tous les trajets ajoutés par la personne
  
         //Vérification du statut
         if($myPersonneManager->isEtudiant($_SESSION['PersIdentifiee']->getNum())){
             $myEtudiantManager=new EtudiantManager($bdd);
-            //Suppression des information au niveau de l'étudiant
+            //Suppression des informations au niveau de l'étudiant
         }else{
             $mySalarieManager = new SalarieManager($bdd);
             //supression les informations au niveau du salarie

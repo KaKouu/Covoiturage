@@ -11,9 +11,9 @@ if (isset($_POST['ville_de_depart'])) {
         <form action="#" method="POST" id="form_tajet">
             <label for='vil_arrive'>Ville d'arrivée : </label>
             <select name="vil_arrive" id="vil_arrive">
-                <option value="">Selectionner une ville d'arrivé</option>
+                <option value="">Selectionner une ville d'arrivée</option>
                 <?php
-                //Selection des villes qui on une correspondance avec la ville de départ saisie
+                //Selection des villes qui ont une correspondance avec la ville de départ saisie
                 $villesParcours = $myTrajetManager->getVillesArrive($_POST['vil_depart']);
                 foreach ($villesParcours as $values) {
                     if ($values != $_POST['vil_depart']) {
@@ -23,7 +23,7 @@ if (isset($_POST['ville_de_depart'])) {
                 ?>
             </select>
             <br>
-            <!--On stocke la ville de depart dans un chanmps caché-->
+            <!--On stocke la ville de départ dans un champ caché-->
             <input type="hidden" id="vil_depart" name="vil_depart" value="<?php echo $_POST['vil_depart']; ?>">
             <label for="date_depat">Date de départ : </label>
             <input type="text" id="date_depat" name="date_depart"  value="<?php echo date("d/m/Y"); ?>">
@@ -31,7 +31,7 @@ if (isset($_POST['ville_de_depart'])) {
             <label for="heure">A partir de :</label>
             <select id="heure_depart" name="heure_depart">
                 <?php
-                // génération des heures dans le formulaire, truc de flémmard ^^
+                // génération des heures dans le formulaire
                 for($i = 0;$i < 25;$i++) {
                     echo '<option value="'.$i.'">'.sprintf('%02d',$i).'h</option>';
                 }

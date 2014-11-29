@@ -20,7 +20,7 @@ else
     $myVilleManager = new VilleManager($bdd);
     if($myVilleManager->existeVille($_POST['nomVille']))
     {
-        echo'la ville existe deja';
+        echo'La ville existe déjà.';
         ?>
         <form action="#" method="POST">
             <label for="nomVille">Nom de la ville :</label>
