@@ -32,8 +32,8 @@ if (isset($_POST['ville_de_depart'])) {
             <select id="heure_depart" name="heure_depart">
                 <?php
                 // génération des heures dans le formulaire, truc de flémmard ^^
-                for($i = 0;$i < 25;$i++) {
-                    echo '<option value="'.$i.'">'.sprintf('%02d',$i).'h</option>';
+                for ($i = 0; $i < 25; $i++) {
+                    echo '<option value="' . $i . '">' . sprintf('%02d', $i) . 'h</option>';
                 }
                 ?>
             </select>
@@ -52,13 +52,41 @@ if (isset($_POST['ville_de_depart'])) {
         //si la ville n'a pas été choisie
         header("location:index.php?page=10");
     }
-}elseif(isset($_POST['rechercher_trajet'])) {
-    $correspondance =$myTrajetManager->getPropositionByVille($_POST['vil_depart'], $_POST['vil_arrive']);
-}
-
-
-
-else {
+} elseif (isset($_POST['rechercher_trajet'])) {
+    $correspondance = $myTrajetManager->getPropositionByVille($_POST['vil_depart'], $_POST['vil_arrive']);
+    $myVilleManager = new VilleManager($bdd);
+    $myPersonneManager = new PersonneManager($bdd);
+    ?>
+    <table>
+        <tr>
+            <th>Ville Départ</th>
+            <th>Ville Arrivée</th>
+            <th>Date Départ</th>
+            <th>Heure Départ</th>
+            <th>Nombre de place</th>
+            <th>Nom du conducteur</th>
+        </tr>
+        <?php
+        foreach ($correspondance as $trajet) {
+            //on récupère la ville de départ
+            $depart = $myVilleManager->getVilleById($trajet['depart']);
+            //on récupère la ville d'arrive
+            $arrive = $myVilleManager->getVilleById($trajet['arrivee']);
+            //on récupère le nom du conducteur
+            //$conducteur = $myPersonneManager->get
+            echo '<tr>';
+            echo '<td>'.$depart->getVilNom().'</td>';
+            echo '<td>'.$arrive->getVilNom().'</td>';
+            echo '<td>'.$trajet['date'].'</td>';
+            echo '<td>'.$trajet['heure'].'</td>';
+            echo '<td>'.$trajet['place'].'</td>';
+            echo '<td>'.$trajet['personne'].'</td>';
+        echo '</tr>';
+        }
+        ?>
+    </table> 
+    <?php
+} else {
     $villesParcours = $myTrajetManager->getAllVilleDepart();
     ?>
     <form action="#" method="POST">
