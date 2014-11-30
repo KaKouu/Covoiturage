@@ -77,19 +77,23 @@ class ProposeManager{
         }
         return $villes;
     }
-    function getPropositionByVille($vDepart,$vArrive){
+    function getPropositionByVille($vDepart,$vArrive,$heure,$intervale,$date){
         $trajets=array();
         $sql="SELECT p.par_num, per_num AS personne, vil_num1 AS depart, vil_num2 AS arrivee ,
             DATE_FORMAT(pro_date,'%d/%m/%Y') AS date, pro_time AS heure,pro_place AS place 
                 FROM propose p 
                 JOIN parcours par ON p.par_num = par.par_num 
                 WHERE vil_num1 = ".$vDepart." AND vil_num2 =  ".$vArrive." AND pro_sens = 0
+                    AND HOUR(pro_time)>=".$heure." 
+                    AND pro_date BETWEEN '".$date."' AND DATE_ADD('".$date."', INTERVAL ".$intervale." DAY)
             UNION
             SELECT p.par_num, per_num AS personne, vil_num2 AS depart, vil_num1 AS arrivee , 
             DATE_FORMAT(pro_date,'%d/%m/%Y') AS date, pro_time AS heure,pro_place AS place
                 FROM propose p 
                 JOIN parcours par ON p.par_num = par.par_num 
-                WHERE vil_num1 = ".$vArrive." AND vil_num2 =  ".$vDepart." AND pro_sens = 1";
+                WHERE vil_num1 = ".$vArrive." AND vil_num2 =  ".$vDepart." AND pro_sens = 1
+                    AND HOUR(pro_time)>=".$heure."
+                    AND pro_date BETWEEN '".$date."' AND  DATE_ADD('".$date."', INTERVAL ".$intervale." DAY)";
         $req=$this->db->prepare($sql);
         $req = $this->db->query($sql);
          while ($trajet = $req->fetch(PDO::FETCH_ASSOC)) {

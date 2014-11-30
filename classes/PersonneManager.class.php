@@ -52,6 +52,15 @@ class PersonneManager {
         $req->closeCursor();
         return $personne; 
     }
+    function getPersById($id) {
+        $sql = "SELECT * FROM personne WHERE per_num ='".$id."'";
+        $req = $this->db->prepare($sql);
+        $req = $this->db->query($sql);
+        $pers = $req->fetch(PDO::FETCH_OBJ);
+        $personne = new Personne($pers);
+        $req->closeCursor();
+        return $personne; 
+    }
     
     function getPersByLogin($login) {
         $sql = "SELECT * FROM personne WHERE per_login ='".$login."'";

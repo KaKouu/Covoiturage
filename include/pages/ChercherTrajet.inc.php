@@ -53,7 +53,13 @@ if (isset($_POST['ville_de_depart'])) {
         header("location:index.php?page=10");
     }
 } elseif (isset($_POST['rechercher_trajet'])) {
-    $correspondance = $myTrajetManager->getPropositionByVille($_POST['vil_depart'], $_POST['vil_arrive']);
+    //formatage de la date
+    $date=str_replace("/", "-", $_POST['date_depart']);
+    $date = date("Y-m-d", strtotime($date));
+    $correspondance = $myTrajetManager->getPropositionByVille($_POST['vil_depart'], 
+            $_POST['vil_arrive'],$_POST['heure_depart'],$_POST['precision'],$date);
+    if(!empty($correspondance))
+    {
     $myVilleManager = new VilleManager($bdd);
     $myPersonneManager = new PersonneManager($bdd);
     ?>
@@ -73,19 +79,23 @@ if (isset($_POST['ville_de_depart'])) {
             //on récupère la ville d'arrive
             $arrive = $myVilleManager->getVilleById($trajet['arrivee']);
             //on récupère le nom du conducteur
-            //$conducteur = $myPersonneManager->get
+            $conducteur = $myPersonneManager->getPersById($trajet['personne']);
             echo '<tr>';
             echo '<td>'.$depart->getVilNom().'</td>';
             echo '<td>'.$arrive->getVilNom().'</td>';
             echo '<td>'.$trajet['date'].'</td>';
             echo '<td>'.$trajet['heure'].'</td>';
             echo '<td>'.$trajet['place'].'</td>';
-            echo '<td>'.$trajet['personne'].'</td>';
+            echo '<td>'.$conducteur->getNom().'</td>';
         echo '</tr>';
         }
         ?>
     </table> 
     <?php
+    }  else {
+        echo '<p>Désolé, pas de trajet disponible</p>';
+    }
+    echo '<p><a href="?page=10">Retour</a></p>';
 } else {
     $villesParcours = $myTrajetManager->getAllVilleDepart();
     ?>
