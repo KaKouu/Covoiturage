@@ -93,7 +93,7 @@ class ProposeManager{
                 JOIN parcours par ON p.par_num = par.par_num 
                 WHERE vil_num1 = ".$vArrive." AND vil_num2 =  ".$vDepart." AND pro_sens = 1
                     AND HOUR(pro_time)>=".$heure."
-                    AND pro_date BETWEEN '".$date."' AND  DATE_ADD('".$date."', INTERVAL ".$intervale." DAY)";
+                    AND pro_date BETWEEN '".$date."' AND DATE_ADD('".$date."', INTERVAL ".$intervale." DAY)";
         $req=$this->db->prepare($sql);
         $req = $this->db->query($sql);
          while ($trajet = $req->fetch(PDO::FETCH_ASSOC)) {

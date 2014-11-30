@@ -12,7 +12,7 @@ $i=1;
 //on affiche toutes les villes
 foreach ($villes as $values)
 {
-  echo '<tr><td>'.$i.'</td>';
+  echo '<tr><td>'.$values->getVilNum().'</td>';
   echo '<td>'.$values->getVilNom().'</td></tr>';
   $i++;
 }

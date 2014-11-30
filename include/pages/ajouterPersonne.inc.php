@@ -28,7 +28,7 @@ if (isset($_POST['statut']) or isset($_POST['etudiant']) or isset($_POST['salari
                 'per_pwd' => $_POST['password']
             );
             if ($_POST['statut'] == 1) {
-
+                //le statut est un statut etudiant
                 $myDepartementManager = new DepartementManager($bdd);
                 $departements = $myDepartementManager->getAllDep();
                 $myDivisionManager = new DivisionManager($bdd);
@@ -55,20 +55,23 @@ if (isset($_POST['statut']) or isset($_POST['etudiant']) or isset($_POST['salari
                 </form>
                 <?php
             } else {
+                //le statut est salarié
                 $myFonctionManager = new FonctionManager($bdd);
                 $fonction = $myFonctionManager->getAllFonction();
                 ?>
                 <form method="POST" action="#">
+                    <label for="sal_telprof">Téléphone professionnel :</label>
                     <input type="tel" name="sal_telprof" >
+                    <br>
+                    <label for="fonction">Votre fonction :</label>
                     <select name="fonction" id="fonction">
-                        <option value="0">Selectionner votre fonction</option>
                         <?php
                         foreach ($fonction as $values) {
                             echo '<option value="' . $values->getNum() . '">' . $values->getLibelle() . '</option>' . "\n";
                         }
                         ?>
                     </select>
-
+                    <br>
                     <input type="submit" name="salarie" value="Valider">
                 </form>
                 <?php
@@ -83,9 +86,10 @@ if (isset($_POST['statut']) or isset($_POST['etudiant']) or isset($_POST['salari
             $_SESSION['personne']['div_num'] = $_POST['division'];
             $myEtudiant = new Etudiant($_SESSION['personne']);
             $myEtudiantManager->add($myEtudiant);
+            echo'<p>Personne ajoutée</p>';
         }
     } else {
-         $personneControle = new PersonneManager($bdd);
+        $personneControle = new PersonneManager($bdd);
         //on verifie si la personne n'existe pas de 2 façons
         if ($personneControle->getPersIdentification($_SESSION['personne']['per_login'], $_SESSION['personne']['per_pwd'])->getNum() == NULL and $personneControle->getPersByMail($_SESSION['personne']['per_mail'])->getNum() == NULL) {
             $mySalarieManager = new SalarieManager($bdd);
@@ -93,6 +97,7 @@ if (isset($_POST['statut']) or isset($_POST['etudiant']) or isset($_POST['salari
             $_SESSION['personne']['fon_num'] = $_POST['fonction'];
             $mySalarie = new Salarie($_SESSION['personne']);
             $mySalarieManager->add($mySalarie);
+            echo'<p>Personne ajoutée</p>';
         }
     }
 } else {

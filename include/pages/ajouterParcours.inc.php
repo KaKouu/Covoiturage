@@ -56,5 +56,7 @@ if (empty($_POST['km']) or empty($_POST['ajouter']) or empty($_POST['ville1']) o
             echo 'Le parcours a été ajouté.';
         } else
             echo 'Le parcours existe déjà.';
+        
+        echo '<p><a href="?page=5">Retour</a></p>';
     }
 }

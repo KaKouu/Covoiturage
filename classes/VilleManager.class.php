@@ -16,7 +16,7 @@ class VilleManager{
 
     function getAllVille() {
         $ville = array();
-        $sql = 'SELECT * FROM ville';
+        $sql = 'SELECT * FROM ville ORDER BY vil_nom';
         $req = $this->db->prepare($sql);
         $req = $this->db->query($sql);
         while ($vil = $req->fetch(PDO::FETCH_OBJ)) {

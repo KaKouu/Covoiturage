@@ -1,5 +1,4 @@
 
-<h1>Liste des Personnes</h1>
 <?php
 $myPersonneManager = new PersonneManager($bdd);
 if (isset($_GET['id'])) {
@@ -20,6 +19,7 @@ if (isset($_GET['id'])) {
         $ville = $myVilleManager->getVilleById($departement->getVilNum());
         //affichage des informations
         ?>
+        <h1>Détail sur l'étudiant <?php echo $etudiant->getNom(); ?></h1>
         <table>
             <tr>
                 <th>Prénom</th>
@@ -45,6 +45,7 @@ if (isset($_GET['id'])) {
         $salarie = $mySalarieManager->getSalarieById($_GET['id']);
         $fonction = $myFonctionManager->getFonctionById($salarie->getNumFonc());
         ?>
+        <h1>Détail sur le salarié <?php echo $salarie->getNom(); ?></h1>
         <table>
             <tr>
                 <th>Prénom</th>
@@ -66,6 +67,7 @@ if (isset($_GET['id'])) {
     echo"<p><a href='index.php?page=2'>Retour</a></p>";
 } else {
     ?>
+<h1>Liste des Personnes</h1>
     <table>
         <tr>
             <th>Numéro</th>
@@ -76,6 +78,7 @@ if (isset($_GET['id'])) {
     <?php
     //recupération de la liste de toutes les personnes
     $personnes = $myPersonneManager->getAllPers();
+    echo '<p>Actuellement '.count($personnes).' personnes enregistrées<p>';
     foreach ($personnes as $value) {
         echo '<tr><td><b><a href=?page=2&id=' . $value->getNum() . "> " . $value->getNum() . "</a></b></td>";
         echo '<td> ' . $value->getNom() . '</td>';
