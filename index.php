@@ -5,7 +5,7 @@ require_once ("include/config.inc.php");
 $bdd = new Mypdo();
  
 ?>
-<div id="corps">
+<div class="row">
 <?php
 require_once("include/menu.inc.php"); 
 require_once("include/texte.inc.php");
