@@ -2,7 +2,7 @@
 <?php
 if (!isset($_SESSION['PersIdentifiee'])) {
     ?>
-    <p>Vous devez être authentifié pour pouvoir proposer un traget</p> 
+    <p>Vous devez être authentifié pour pouvoir proposer un trajet.</p> 
     <a href="index.php?page=11">Connexion</a>
     <a href="index.php?page=1">Inscrption</a>
     <?php
@@ -13,14 +13,15 @@ if (!isset($_SESSION['PersIdentifiee'])) {
     $myVilleManager = new VilleManager($bdd);
 
     if (isset($_POST['vil_depart'])) {
-        //la ville de depart à été selectionné
+        //la ville de depart a été selectionnée
         if ($_POST['vil_depart'] != '') {
             ?>
-            <p>Votre de ville de départ :<b> <?php echo $myVilleManager->getVilleById($_POST['vil_depart'])->getVilNom(); ?></b></p>
+            <p>Votre de ville de départ :<b> 
+            <?php echo $myVilleManager->getVilleById($_POST['vil_depart'])->getVilNom(); ?></b></p>
             <form action="#" method="POST" id="form_Tajet">
                 <label for='vil_arrive'>Ville d'arrivée : </label>
                 <select name="vil_arrive" id="vil_arrive">
-                    <option value="">Selectionner une ville d'arrivé</option>
+                    <option value="">Selectionner une ville d'arrivée</option>
                     <?php
                     $villesParcours = $myTrajetManager->getAllVilleInParcours($_POST['vil_depart']);
                     foreach ($villesParcours as $values) {
@@ -50,17 +51,17 @@ if (!isset($_SESSION['PersIdentifiee'])) {
         }
     } elseif (isset($_POST['ajouter_trajet'])) {
         if (empty($_POST['ville_depart']) or empty($_POST['vil_arrive']) or empty($_POST['date_depart']) or empty($_POST['heure_depart']) or !isset($_POST['nb_place'])) {
-            echo"votre formulaire est mal rempli ";
+            echo"Votre formulaire est mal rempli. ";
         } else {
             $date_depart = $_POST['date_depart'];
             $date = explode('-', str_replace("/", "-", $date_depart));
             if ($_POST['nb_place'] <= 0) {
-                echo '<p>Vous ne pouvez pas faire du covoiturage tout seul accepter au moins une personne</p>';
+                echo '<p>Vous ne pouvez pas faire du covoiturage tout seul, acceptez au moins une personne.</p>';
             }else if (count($date) < 2 or count($date) > 3) {
-                echo "<p>Votre format de date est mauvaise</p>";
+                echo "<p>Votre format de date est mauvais.</p>";
             }
             else if (date("Y-m-d", strtotime(str_replace("/", "-", $date_depart))) < date("Y-m-d")) {
-                echo "<p>Vous ne pouvez pas covoiturer à une date antérieur à aujourd'hui</p>";
+                echo "<p>Vous ne pouvez pas covoiturer à une date antérieure à aujourd'hui</p>";
             }else{
                 $parcours = $myTrajetManager->getByVille($_POST['ville_depart'], $_POST['vil_arrive']);
                 if($parcours->getVilNum1()== $_POST['ville_depart']){
@@ -82,7 +83,7 @@ if (!isset($_SESSION['PersIdentifiee'])) {
                 $myPropose = new Propose($trajet);
                 
                 $myPropositionManager ->add($myPropose);
-                echo "<p>Le trajet à bien été ajouté</p>";
+                echo "<p>Le trajet a bien été ajouté.</p>";
             }
              
         }
@@ -90,11 +91,11 @@ if (!isset($_SESSION['PersIdentifiee'])) {
         //formulaire de départ
         $villesParcours = $myTrajetManager->getAllVilleParcours();
         ?>
-        <p>Selectionner le trajet que vous souhaité effectuer</p>
+        <p>Sélectionner le trajet que vous souhaitez effectuer</p>
         <form action="#" method="POST" id="form_Tajet">
             <label for='vil_depart'>Ville de départ : </label>
             <select name="vil_depart" id="vil_depart" onchange="document.forms['form_Tajet'].submit();">
-                <option value="">Selectionner une ville de départ</option>
+                <option value="">Sélectionner une ville de départ</option>
                 <?php
                 foreach ($villesParcours as $values) {
                     echo '<option value="' . $values->getVilNum() . '">' . $values->getVilNom() . ' </option>' . "\n";

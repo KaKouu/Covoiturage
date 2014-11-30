@@ -3,7 +3,7 @@
 $personneControle = new PersonneManager($bdd);
 if (!isset($_SESSION['PersIdentifiee'])) {
     ?>
-    <p>Vous devez être connecté pour pouvoir vous modifier les information de votre profils</p> 
+    <p>Vous devez être connecté pour pouvoir modifier les informations de votre profil</p> 
     <a href="index.php?page=11">Connexion</a>
     <a href="index.php?page=1">Inscrption</a>
     <?php
@@ -12,16 +12,16 @@ if (!isset($_SESSION['PersIdentifiee'])) {
         //si la personne souhaite modifier une information
         if (isset($_POST['identite'])) {
             $controle = true;
-            //on verrifi si il y a eu un changement dans le formulaire
+            //on vérifie si il y a eu un changement dans le formulaire
             if ($_POST['nom'] != $_SESSION['PersIdentifiee']->getNom() or
                     $_POST['prenom'] != $_SESSION['PersIdentifiee']->getPrenom() or
                     $_POST['mail'] != $_SESSION['PersIdentifiee']->getMail() or
                     $_POST['tel'] != $_SESSION['PersIdentifiee']->getTel()) {
-                // la personne à modifier une info
+                // la personne a modifié une info
                 //la personne souhaite modifier un renseignement sur son identité
                 if ($_POST['mail'] != $_SESSION['PersIdentifiee']->getMail()) {
                     // l'utilisateur souhaite modifier son mail
-                    //on verifit si il est disponible
+                    //on verifie si il est disponible
                     if ($personneControle->getPersByMail($_POST['mail'])->getNum()!= NULL) {
                         //le mail existe déja
                         $controle=false;
@@ -34,42 +34,42 @@ if (!isset($_SESSION['PersIdentifiee'])) {
                 //les tests sont finis
                 //on verifie s'il n'y a pas eu d'erreur
                 if ($controle) {
-                    //on modifit les données
+                    //on modifie les données
                     $_SESSION['PersIdentifiee']->setNom($_POST['nom']);
                     $_SESSION['PersIdentifiee']->setPrenom($_POST['prenom']);
                     $_SESSION['PersIdentifiee']->setTel($_POST['tel']);
                     //on update la bdd
                     $personneControle->setPersonneIdentite($_SESSION['PersIdentifiee'], $_SESSION['PersIdentifiee']->getNum());
-                    //toutes les modification on été effectué
+                    //toutes les modifications ont été effectuées
                     echo '<p>Modification(s) effectuée(s).</p>';
                 }
             }
         } else {
             $controle=true;
-            //modification des info de connexion : login et mdp
+            //modification des infos de connexion : login et mdp
             if ($_POST['login'] != $_SESSION['PersIdentifiee']->getLogin() or $_POST['mdp'] != "De$0µl£") {
-                //une information à été changé
+                //une information a été changée
                 if ($_POST['login'] != $_SESSION['PersIdentifiee']->getLogin()) {
-                    // le login à été modifié
-                    //on verifie si il existe pas dans la bdd
+                    // le login a été modifié
+                    //on verifie si il n'existe pas dans la bdd
                     if ($personneControle->getPersByLogin($_POST['login'])->getNum() != NULL) {
                         //le login est déja dans la base de données
                         $controle=false;
-                        echo '<p>Le login existe déja</p>';
+                        echo '<p>Le login existe déja.</p>';
                     } else {
                         //le login est libre
                         $_SESSION['PersIdentifiee']->setLogin($_POST['login']);
                     }
                 }
                 if (sha1(sha1($_POST['mdp'].SAL)) != $_SESSION['PersIdentifiee']->getPwd() ) {
-                    //le mot de passe à été modifier
+                    //le mot de passe a été modifié
                     $_SESSION['PersIdentifiee']->setPwd($_POST['mdp']);
                 }
                 //update dans la bdd
                 if ($controle) {                 
                     //on update la bdd
                     $personneControle->setPersonneConnexion($_SESSION['PersIdentifiee'], $_SESSION['PersIdentifiee']->getNum());
-                    //toutes les modification on été effectué
+                    //toutes les modifications ont été effectuées
                     echo '<p>Modification(s) effectuée(s).</p>';
                 }
             }
@@ -81,7 +81,7 @@ if (!isset($_SESSION['PersIdentifiee'])) {
         <label for="" >Nom</label>
         <input type="text" name="nom" value="<?php echo $_SESSION['PersIdentifiee']->getNom(); ?>">
         <br>
-        <label for="" >Prenom</label>
+        <label for="" >Prénom</label>
         <input type="text" name="prenom"  value="<?php echo $_SESSION['PersIdentifiee']->getPrenom(); ?>">
         <br>
         <label for="" >Mail</label>
@@ -100,7 +100,7 @@ if (!isset($_SESSION['PersIdentifiee'])) {
         <label for="">Mot de passe</label>
         <input type="password" name="mdp" value="De$0µl£">
         <br>
-        <input type="submit" name="authentification" value="Mofifier">
+        <input type="submit" name="authentification" value="Modifier">
     </form>
     <?php
 }

@@ -10,7 +10,7 @@ if (empty($_POST['km']) or empty($_POST['ajouter']) or empty($_POST['ville1']) o
     <form action="#" method="POST">
         <label for='ville1'>Ville de départ : </label>
         <select name="ville1" id="ville1">
-            <option value="">Selectionner une ville de départ</option>
+            <option value="">Sélectionner une ville de départ</option>
             <?php
             foreach ($villes as $values) {
                 echo '<option value="' . $values->getVilNum() . '">' . $values->getVilNom() . '</option>' . "\n";
@@ -28,7 +28,7 @@ if (empty($_POST['km']) or empty($_POST['ajouter']) or empty($_POST['ville1']) o
             ?>
         </select>
         <br>
-        <label for="km">Nombre de kilometre</label>
+        <label for="km">Nombre de kilomètres</label>
         <input type="number" id="km" name="km"/>
         <br>
         <input type="submit" id="ajouter" name="ajouter" value="Ajouter"/>

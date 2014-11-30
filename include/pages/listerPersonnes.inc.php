@@ -3,8 +3,8 @@
 <?php
 $myPersonneManager = new PersonneManager($bdd);
 if (isset($_GET['id'])) {
-    //page personnalié d'une personne avec toutes ses information relative
-    //on récupère sont statut
+    //page personnalisée d'une personne avec toutes ses informations relatives
+    //on récupère son statut
     if ($myPersonneManager->isEtudiant($_GET['id'])) {
         //si la personne est un étudiant
         $myEtudiantManager = new EtudiantManager($bdd);
@@ -12,13 +12,13 @@ if (isset($_GET['id'])) {
         $myVilleManager = new VilleManager($bdd);
         // manager pour le département
         $myDepartementManager = new DepartementManager($bdd);
-        //on récupère les information relative à l'étudiant
+        //on récupère les informations relatives à l'étudiant
         $etudiant = $myEtudiantManager->getEtuById($_GET['id']);
         // on récupère le département
         $departement = $myDepartementManager->getDepById($etudiant->getDep());
         // la ville du département
         $ville = $myVilleManager->getVilleById($departement->getVilNum());
-        //affichage des information
+        //affichage des informations
         ?>
         <table>
             <tr>
@@ -50,7 +50,7 @@ if (isset($_GET['id'])) {
                 <th>Prénom</th>
                 <th>Mail</th>
                 <th>Téléphone</th>
-                <th>Tel prof</th>
+                <th>Téléphone professionnel</th>
                 <th>Fonction</th>
             </tr>
             <tr>

@@ -29,7 +29,7 @@ if (isset($_POST['valider']))
         if($_POST['reponse'] == ($asdfmovie1[$_POST['nb1']]+$asdfmovie1[$_POST['nb2']]))
         {
  
-              $myPersonneManager = new PersonneManager($bdd);
+             $myPersonneManager = new PersonneManager($bdd);
              $personne = $myPersonneManager->getPersIdentification($_POST['login'], $_POST['passwd']);
              if ($personne->getNum() != NULL){
                  $_SESSION['PersIdentifiee'] = $personne;
@@ -51,8 +51,8 @@ else
     <form action="#" method="POST">
         <label for="login">Nom d'utilisateur</label><br>
         <input type="text" name="login" id="login"><br>
-        <label for='passwd'>Mote de passe</label><br>
-        <input type='text' name='passwd' id='passwd'><br>
+        <label for='passwd'>Mot de passe</label><br>
+        <input type='password' name='passwd' id='passwd'><br>
         <?php
         
         

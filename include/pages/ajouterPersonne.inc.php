@@ -4,19 +4,19 @@
 <?php
 if (isset($_POST['statut']) or isset($_POST['etudiant']) or isset($_POST['salarie'])) {
     if (isset($_POST['statut'])) {
-        //verification si la personne n'exite pas dans la base
+        //verification si la personne n'existe pas déjà dans la base
         $personneControle = new PersonneManager($bdd);
         if ($personneControle->getPersByLogin($_POST['login'])->getNum() != NULL) {
             //par le login
-            echo '<p>Le login existe déja</p>';
+            echo '<p>Le login existe déjà.</p>';
         } elseif ($personneControle->getPersByMail($_POST['mail'])->getNum() != NULL) {
             //par le mail
-            echo '<p>Le mail est déjà utilié</p>';
+            echo '<p>Le mail est déjà utilisé.</p>';
         } elseif ($personneControle->getPersByName($_POST['nom'], $_POST['prenom'])->getNum() != NULL AND $personneControle->getPersByMail($_POST['mail'])->getNum() != NULL) {
-            //par le nom et prenom er mail
+            // par les nom, prenom et mail
             // on ne peut pas arreter le test au nom et au prenom de la personne 
-            // du coup pour verrifier si elle est bien unique on verrifie aussi le mail
-            echo '<p>Cette personne exite utilié</p>';
+            // du coup pour vérifier si elle est bien unique on vérifie aussi le mail
+            echo '<p>Cette personne existe.</p>';
         } else {
             //la personne est bien unique
             $_SESSION['personne'] = array(
@@ -76,7 +76,7 @@ if (isset($_POST['statut']) or isset($_POST['etudiant']) or isset($_POST['salari
         }
     } elseif (isset($_POST['etudiant'])) {
         $personneControle = new PersonneManager($bdd);
-        //on vertifie si la personne n'existe pas de 2 façon
+        //on verifie si la personne n'existe pas de 2 façon
         if ($personneControle->getPersIdentification($_SESSION['personne']['per_login'], $_SESSION['personne']['per_pwd'])->getNum() == NULL and $personneControle->getPersByMail($_SESSION['personne']['per_mail'])->getNum() == NULL) {
             $myEtudiantManager = new EtudiantManager($bdd);
             $_SESSION['personne']['dep_num'] = $_POST['departement'];
@@ -86,7 +86,7 @@ if (isset($_POST['statut']) or isset($_POST['etudiant']) or isset($_POST['salari
         }
     } else {
          $personneControle = new PersonneManager($bdd);
-        //on vertifie si la personne n'existe pas de 2 façons
+        //on verifie si la personne n'existe pas de 2 façons
         if ($personneControle->getPersIdentification($_SESSION['personne']['per_login'], $_SESSION['personne']['per_pwd'])->getNum() == NULL and $personneControle->getPersByMail($_SESSION['personne']['per_mail'])->getNum() == NULL) {
             $mySalarieManager = new SalarieManager($bdd);
             $_SESSION['personne']['sal_telprof'] = $_POST['sal_telprof'];
