@@ -17,6 +17,7 @@ if (isset($_POST['statut']) or isset($_POST['etudiant']) or isset($_POST['salari
             // on ne peut pas arreter le test au nom et au prenom de la personne 
             // du coup pour vérifier si elle est bien unique on vérifie aussi le mail
             echo '<p>Cette personne existe.</p>';
+            echo'<p>Connectez-vous : <a href="?page=11">connexion</a></p>';
         } else {
             //la personne est bien unique
             $_SESSION['personne'] = array(
@@ -85,8 +86,16 @@ if (isset($_POST['statut']) or isset($_POST['etudiant']) or isset($_POST['salari
             $_SESSION['personne']['dep_num'] = $_POST['departement'];
             $_SESSION['personne']['div_num'] = $_POST['division'];
             $myEtudiant = new Etudiant($_SESSION['personne']);
-            $myEtudiantManager->add($myEtudiant);
-            echo'<p>Personne ajoutée</p>';
+            $retour = $myEtudiantManager->add($myEtudiant);
+            if ($retour != 0) {
+                echo'<p>Personne ajoutée.</p>';
+                echo'<p>Vous pouvez maintenant vous connecter :<a href="?page=11">connexion</a>.</p>';
+            } else {
+                echo"<p>Erreur.</p>";
+            }
+        } else {
+            echo '<p>Cette personne existe déjà</p>';
+            echo'<p>Connectez-vous : <a href="?page=11">connexion</a></p>';
         }
     } else {
         $personneControle = new PersonneManager($bdd);
@@ -96,8 +105,16 @@ if (isset($_POST['statut']) or isset($_POST['etudiant']) or isset($_POST['salari
             $_SESSION['personne']['sal_telprof'] = $_POST['sal_telprof'];
             $_SESSION['personne']['fon_num'] = $_POST['fonction'];
             $mySalarie = new Salarie($_SESSION['personne']);
-            $mySalarieManager->add($mySalarie);
-            echo'<p>Personne ajoutée</p>';
+            $retour = $mySalarieManager->add($mySalarie);
+            if ($retour != 0) {
+                echo'<p>Personne ajoutée.</p>';
+                echo'<p>Vous pouvez maintenant vous connecter : <a href="?page=11">connexion</a>.</p>';
+            } else {
+                echo "<p>Erreur.</p>";
+            }
+        } else {
+            echo '<p>Cette personne existe déjà.</p>';
+            echo'<p>Connectez-vous : <a href="?page=11">connexion</a>.</p>';
         }
     }
 } else {

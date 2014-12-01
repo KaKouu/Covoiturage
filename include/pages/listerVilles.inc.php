@@ -7,14 +7,13 @@ $villes = $myVilleManager->getAllVille();
 ?>
 <table>
     <tr><th>Numéro</th><th>Villes</th></tr>
-<?php
-$i=1;
+    <?php
+    $i = 1;
 //on affiche toutes les villes
-foreach ($villes as $values)
-{
-  echo '<tr><td>'.$values->getVilNum().'</td>';
-  echo '<td>'.$values->getVilNom().'</td></tr>';
-  $i++;
-}
-?>
+    foreach ($villes as $values) {
+        echo '<tr><td>' . $values->getVilNum() . '</td>';
+        echo '<td>' . $values->getVilNom() . '</td></tr>';
+        $i++;
+    }
+    ?>
 </table>

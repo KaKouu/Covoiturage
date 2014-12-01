@@ -16,7 +16,9 @@ class ProposeManager{
         $req->bindValue(':pro_time', $propose->getProTime(), PDO::PARAM_STR);
         $req->bindValue(':pro_place', $propose->getProPlace(), PDO::PARAM_INT);
         $req->bindValue(':pro_sens', $propose->getProSens(), PDO::PARAM_INT);
-        $req->execute();
+        $retour = $req->execute();
+        return $retour;
+        
     }
 
     function getAllPropose() {

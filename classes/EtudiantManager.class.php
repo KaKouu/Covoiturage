@@ -17,7 +17,9 @@ class EtudiantManager {
         $req->bindValue(':dep_num', $etudiant->getDep(), PDO::PARAM_INT);
         $req->bindValue(':div_num', $etudiant->getDiv(), PDO::PARAM_INT);
         $req->bindValue(':per_num', $id, PDO::PARAM_STR);
-        $req->execute();
+        $retour = $req->execute();
+        $req->closeCursor();
+        return $retour;
     }
 
     function getAllEtu() {
@@ -28,8 +30,8 @@ class EtudiantManager {
         while ($etu = $req->fetch(PDO::FETCH_OBJ)) {
             $etudiant[] = new Etudiant($etu);
         }
-        return $etudiant;
         $req->closeCursor();
+        return $etudiant;
     }
 
     function getEtuById($id) {
@@ -37,13 +39,15 @@ class EtudiantManager {
         $req = $this->db->prepare($sql);
         $req = $this->db->query($sql);
         $etudiant = new Etudiant($req->fetch(PDO::FETCH_OBJ));
-
+        $req->closeCursor();
         return $etudiant;
     }
-    
-    function deleteEtudiantById($id){
+
+    function deleteEtudiantById($id) {
         $sql = 'DELETE FROM etudiant WHERE per_num =' . $id;
         $req = $this->db->prepare($sql);
         $req->execute();
+        $req->closeCursor();
     }
+
 }

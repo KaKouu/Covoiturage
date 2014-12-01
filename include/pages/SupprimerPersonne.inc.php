@@ -21,17 +21,21 @@ if (!isset($_SESSION['PersIdentifiee'])) {
         $myPropositionManager = new ProposeManager($bdd);
         $myPersonneManager = new PersonneManager($bdd);
         //suppression de tous les trajets ajoutés par la personne
+        $myPropositionManager->deletePropositionById($_SESSION['PersIdentifiee']->getNum());
  
         //Vérification du statut
         if($myPersonneManager->isEtudiant($_SESSION['PersIdentifiee']->getNum())){
             $myEtudiantManager=new EtudiantManager($bdd);
             //Suppression des informations au niveau de l'étudiant
+            $myEtudiantManager->deleteEtudiantById($_SESSION['PersIdentifiee']->getNum());
         }else{
             $mySalarieManager = new SalarieManager($bdd);
             //supression les informations au niveau du salarie
+            $mySalarieManager->deleteSalarieById($_SESSION['PersIdentifiee']->getNum());
         }
         //enfin suppression des informations de la personne
-        
+        $myPersonneManager->deletePersonne($_SESSION['PersIdentifiee']->getNum());
+        header("location:?page=12");
         
     } else if (isset($_POST['non'])) {
         //on redirige vers la page d'accueil'

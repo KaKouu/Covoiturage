@@ -1,5 +1,3 @@
-
-
     <div class="col-sm-offset-1 col-sm-8">
         <?php
         if (!empty($_GET["page"])) {

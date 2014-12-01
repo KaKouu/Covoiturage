@@ -1,5 +1,7 @@
 <?php
-class VilleManager{
+
+class VilleManager {
+
     private $db;
 
     function __construct($db) {
@@ -25,31 +27,33 @@ class VilleManager{
         return $ville;
         $req->closeCursor();
     }
-    
+
     function getVilleById($id) {
-        $sql = 'SELECT * FROM ville WHERE vil_num='.$id;
+        $sql = 'SELECT * FROM ville WHERE vil_num=' . $id;
         $req = $this->db->prepare($sql);
         $req = $this->db->query($sql);
         $vil = $req->fetch(PDO::FETCH_OBJ);
         return new Ville($vil);
         $req->closeCursor();
     }
-    function existeVille($name){
-        $sql = "SELECT * FROM ville WHERE vil_nom='".$name."'";
+
+    function existeVille($name) {
+        $sql = "SELECT * FROM ville WHERE vil_nom='" . $name . "'";
         $req = $this->db->prepare($sql);
         $req = $this->db->query($sql);
-        if($req->fetch())
-                return true;
+        if ($req->fetch())
+            return true;
         return false;
-        
     }
+
     function getVilleByName($name) {
         $ville = array();
-        $sql = "SELECT * FROM ville WHERE vil_nom='".$name."'";
+        $sql = "SELECT * FROM ville WHERE vil_nom='" . $name . "'";
         $req = $this->db->prepare($sql);
         $req = $this->db->query($sql);
         $vil = $req->fetch(PDO::FETCH_OBJ);
         return new Ville($vil);
         $req->closeCursor();
     }
+
 }

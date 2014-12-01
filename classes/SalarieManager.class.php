@@ -16,7 +16,9 @@ class SalarieManager {
         $req->bindValue(':per_num', $id, PDO::PARAM_INT);
         $req->bindValue(':sal_telprof', $salarie->getTelProf(), PDO::PARAM_STR);
         $req->bindValue(':fon_num', $salarie->getNumFonc(), PDO::PARAM_INT);
-        $req->execute();
+        $retour = $req->execute();
+        $req->closeCursor();
+        return $retour;
     }
 
     function getAllSalarie() {
@@ -26,8 +28,9 @@ class SalarieManager {
         while ($sal = $req->fetch(PDO::FETCH_OBJ)) {
             $salarie[] = new Salarie($sal);
         }
-        return $salarie;
         $req->closeCursor();
+        return $salarie;
+      
     }
 
     function getSalarieById($id) {
@@ -42,6 +45,7 @@ class SalarieManager {
         $sql = 'DELETE FROM salarie WHERE per_num =' . $id;
         $req = $this->db->prepare($sql);
         $req->execute();
+        $req->closeCursor();
     }
 
 }

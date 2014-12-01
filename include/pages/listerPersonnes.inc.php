@@ -67,7 +67,7 @@ if (isset($_GET['id'])) {
     echo"<p><a href='index.php?page=2'>Retour</a></p>";
 } else {
     ?>
-<h1>Liste des Personnes</h1>
+    <h1>Liste des Personnes</h1>
     <table>
         <tr>
             <th>Numéro</th>
@@ -75,16 +75,16 @@ if (isset($_GET['id'])) {
             <th>Prénom</th>
         </tr>
 
-    <?php
-    //recupération de la liste de toutes les personnes
-    $personnes = $myPersonneManager->getAllPers();
-    echo '<p>Actuellement '.count($personnes).' personnes enregistrées<p>';
-    foreach ($personnes as $value) {
-        echo '<tr><td><b><a href=?page=2&id=' . $value->getNum() . "> " . $value->getNum() . "</a></b></td>";
-        echo '<td> ' . $value->getNom() . '</td>';
-        echo '<td>' . $value->getPrenom() . '</td></tr>';
-    }
-    ?>
-    </table>
         <?php
-    }
+        //recupération de la liste de toutes les personnes
+        $personnes = $myPersonneManager->getAllPers();
+        echo '<p>Actuellement ' . count($personnes) . ' personnes enregistrées<p>';
+        foreach ($personnes as $value) {
+            echo '<tr><td><b><a href=?page=2&id=' . $value->getNum() . "> " . $value->getNum() . "</a></b></td>";
+            echo '<td> ' . $value->getNom() . '</td>';
+            echo '<td>' . $value->getPrenom() . '</td></tr>';
+        }
+        ?>
+    </table>
+    <?php
+}

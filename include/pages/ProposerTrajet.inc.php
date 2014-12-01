@@ -1,5 +1,6 @@
 <h1>Proposer un trajet</h1>
 <?php
+require 'include/functions.inc.php';
 if (!isset($_SESSION['PersIdentifiee'])) {
     ?>
     <p>Vous devez être authentifié pour pouvoir proposer un trajet.</p> 
@@ -17,7 +18,7 @@ if (!isset($_SESSION['PersIdentifiee'])) {
         if ($_POST['vil_depart'] != '') {
             ?>
             <p>Votre de ville de départ :<b> 
-            <?php echo $myVilleManager->getVilleById($_POST['vil_depart'])->getVilNom(); ?></b></p>
+                    <?php echo $myVilleManager->getVilleById($_POST['vil_depart'])->getVilNom(); ?></b></p>
             <form action="#" method="POST" id="form_Tajet">
                 <label for='vil_arrive'>Ville d'arrivée : </label>
                 <select name="vil_arrive" id="vil_arrive">
@@ -45,47 +46,50 @@ if (!isset($_SESSION['PersIdentifiee'])) {
                 <input type="submit" name="ajouter_trajet" id ="ajouter_trajet" value="Ajouter">
             </form>
             <?php
-        }
-        else{
+        } else {
             header("location:index.php?page=9");
         }
     } elseif (isset($_POST['ajouter_trajet'])) {
         if (empty($_POST['ville_depart']) or empty($_POST['vil_arrive']) or empty($_POST['date_depart']) or empty($_POST['heure_depart']) or !isset($_POST['nb_place'])) {
             echo"Votre formulaire est mal rempli. ";
         } else {
-            $date_depart = $_POST['date_depart'];
-            $date = explode('-', str_replace("/", "-", $date_depart));
+            //formatage de la date
+            $date_format = explode('/', $_POST['date_depart']);
+            //verification du format
+            if (count($date_format) > 2 and count($date_format) <= 3) {
+                $date = getEnglishDate($_POST['date_depart']);
+            }
             if ($_POST['nb_place'] <= 0) {
                 echo '<p>Vous ne pouvez pas faire du covoiturage tout seul, acceptez au moins une personne.</p>';
-            }else if (count($date) < 2 or count($date) > 3) {
+            } else if (count($date_format) <= 2 or count($date_format) > 3) {
                 echo "<p>Votre format de date est mauvais.</p>";
-            }
-            else if (date("Y-m-d", strtotime(str_replace("/", "-", $date_depart))) < date("Y-m-d")) {
+            } else if (strtotime($date) < strtotime(date("Y-m-d"))) {
                 echo "<p>Vous ne pouvez pas covoiturer à une date antérieure à aujourd'hui</p>";
-            }else{
+            } else {
                 $parcours = $myTrajetManager->getByVille($_POST['ville_depart'], $_POST['vil_arrive']);
-                if($parcours->getVilNum1()== $_POST['ville_depart']){
-                    $sens=0;
-                }
-                else{
+                if ($parcours->getVilNum1() == $_POST['ville_depart']) {
+                    $sens = 0;
+                } else {
                     $sens = 1;
                 }
                 $trajet = array(
                     'per_num' => $_SESSION['PersIdentifiee']->getNum(),
                     'pro_date' => date("Y-m-d", strtotime(str_replace("/", "-", $_POST['date_depart']))),
-                    'pro_time'=>$_POST['heure_depart'],
-                    'pro_place' =>$_POST['nb_place'],
-                    'par_num'=>$parcours->getParNum(),
-                    'pro_sens'=>$sens
+                    'pro_time' => $_POST['heure_depart'],
+                    'pro_place' => $_POST['nb_place'],
+                    'par_num' => $parcours->getParNum(),
+                    'pro_sens' => $sens
                 );
-                
-                $myPropositionManager= new ProposeManager($bdd);
+
+                $myPropositionManager = new ProposeManager($bdd);
                 $myPropose = new Propose($trajet);
-                
-                $myPropositionManager ->add($myPropose);
-                echo "<p>Le trajet a bien été ajouté.</p>";
+
+                $ajout = $myPropositionManager->add($myPropose);
+                if ($ajout != 0)
+                    echo "<p>Le trajet a bien été ajouté.</p>";
+                else
+                    echo "Erreur";
             }
-             
         }
     } else {
         //formulaire de départ

@@ -39,5 +39,6 @@ class Division {
         //if(is_string($divNom))
             $this->divNom = $divNom;
     }
+    
 
 }

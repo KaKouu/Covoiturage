@@ -51,12 +51,12 @@ if (empty($_POST['km']) or empty($_POST['ajouter']) or empty($_POST['ville1']) o
         );
         $myParcoursManager = new ParcoursManager($bdd);
         $myParcours = new Parcours($parcours);
-        if ($myParcoursManager->getByVille($_POST['ville1'], $_POST['ville2'])->getParNum()==NULL) {
+        if ($myParcoursManager->getByVille($_POST['ville1'], $_POST['ville2'])->getParNum() == NULL) {
             $myParcoursManager->add($myParcours);
             echo 'Le parcours a été ajouté.';
         } else
             echo 'Le parcours existe déjà.';
-        
+
         echo '<p><a href="?page=5">Retour</a></p>';
     }
 }
