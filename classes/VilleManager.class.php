@@ -13,7 +13,9 @@ class VilleManager {
                 . 'VALUES(:vil_num, :vil_nom)');
         $req->bindValue(':vil_num', $ville->getVilNum(), PDO::PARAM_INT);
         $req->bindValue(':vil_nom', $ville->getVilNom(), PDO::PARAM_STR);
-        $req->execute();
+        $retour=$req->execute();
+        $req->closeCursor();
+        return $retour;
     }
 
     function getAllVille() {
@@ -24,8 +26,9 @@ class VilleManager {
         while ($vil = $req->fetch(PDO::FETCH_OBJ)) {
             $ville[] = new Ville($vil);
         }
-        return $ville;
         $req->closeCursor();
+        return $ville;
+        
     }
 
     function getVilleById($id) {
@@ -33,8 +36,9 @@ class VilleManager {
         $req = $this->db->prepare($sql);
         $req = $this->db->query($sql);
         $vil = $req->fetch(PDO::FETCH_OBJ);
-        return new Ville($vil);
         $req->closeCursor();
+        return new Ville($vil);
+        
     }
 
     function existeVille($name) {
@@ -52,8 +56,9 @@ class VilleManager {
         $req = $this->db->prepare($sql);
         $req = $this->db->query($sql);
         $vil = $req->fetch(PDO::FETCH_OBJ);
-        return new Ville($vil);
         $req->closeCursor();
+        return new Ville($vil);
+        
     }
 
 }

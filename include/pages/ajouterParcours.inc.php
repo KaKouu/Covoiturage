@@ -40,8 +40,8 @@ if (empty($_POST['km']) or empty($_POST['ajouter']) or empty($_POST['ville1']) o
     <?php
 } else {
     if ($_POST['ville1'] == $_POST['ville2']) {
-        echo 'Vous devez entrez deux villes différentes.</br>';
-        echo "<a href='index.php?page=5'>Retour</a>";
+        echo '<p>Vous devez entrez deux villes différentes.</p>';
+        echo "</p><a href='index.php?page=5'>Retour</a></p>";
     } else {
         $parcours = array(
             'par_num' => null,
@@ -52,10 +52,14 @@ if (empty($_POST['km']) or empty($_POST['ajouter']) or empty($_POST['ville1']) o
         $myParcoursManager = new ParcoursManager($bdd);
         $myParcours = new Parcours($parcours);
         if ($myParcoursManager->getByVille($_POST['ville1'], $_POST['ville2'])->getParNum() == NULL) {
-            $myParcoursManager->add($myParcours);
-            echo 'Le parcours a été ajouté.';
+            $retour = $myParcoursManager->add($myParcours);
+            if ($retour != 0) {
+                echo '<p>Le parcours a été ajouté.</p>';
+            } else {
+                echo '<p>Erreur.</p>';
+            }
         } else
-            echo 'Le parcours existe déjà.';
+            echo '<p>Le parcours existe déjà.</p>';
 
         echo '<p><a href="?page=5">Retour</a></p>';
     }

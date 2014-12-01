@@ -15,7 +15,9 @@ class ParcoursManager {
         $req->bindValue(':par_km', $parcours->getParKm(), PDO::PARAM_INT);
         $req->bindValue(':vil_num1', $parcours->getVilNum1(), PDO::PARAM_INT);
         $req->bindValue(':vil_num2', $parcours->getVilNum2(), PDO::PARAM_INT);
-        $req->execute();
+        $retour=$req->execute();
+        $req->closeCursor();
+        return $retour;
     }
 
     function getAllParcours() {
