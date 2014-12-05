@@ -8,7 +8,7 @@ $myParcoursManager = new ParcoursManager($bdd);
 $parcours = $myParcoursManager->getAllParcours();
 ?>
 <p>Actuellement <?php echo count($parcours); ?> parcours sont enrgistrés</p>
-<table>
+<table class="table table table-bordered table-striped table-condensed">
     <tr><th>Numéro</th><th>Nom ille</th><th>Nom Ville</th><th> Nombre de kilomètre </th></tr>
     <?php
     $i = 1;

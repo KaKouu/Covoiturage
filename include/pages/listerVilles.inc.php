@@ -5,7 +5,7 @@ $myVilleManager = new VilleManager($bdd);
 //on récupère toutes les villes
 $villes = $myVilleManager->getAllVille();
 ?>
-<table>
+<table class="table table table-bordered table-striped table-condensed" >
     <tr><th>Numéro</th><th>Villes</th></tr>
     <?php
     $i = 1;

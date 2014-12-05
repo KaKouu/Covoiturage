@@ -6,14 +6,14 @@ class Etudiant extends Personne {
     private $div;
     private $num;
 
-    function __construct($etudiant) {
+   public function __construct($etudiant) {
         if (!empty($etudiant)) {
             parent::__construct($etudiant);
             $this->affecteEtudiant($etudiant);
         }
     }
 
-    function affecteEtudiant($etudiant) {
+   public function affecteEtudiant($etudiant) {
         foreach ($etudiant as $col => $value) {
             switch ($col) {
                 case 'dep_num':

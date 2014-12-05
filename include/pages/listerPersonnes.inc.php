@@ -20,7 +20,7 @@ if (isset($_GET['id'])) {
         //affichage des informations
         ?>
         <h1>Détail sur l'étudiant <?php echo $etudiant->getNom(); ?></h1>
-        <table>
+        <table class="table table table-bordered table-striped table-condensed">
             <tr>
                 <th>Prénom</th>
                 <th>Mail</th>
@@ -46,7 +46,7 @@ if (isset($_GET['id'])) {
         $fonction = $myFonctionManager->getFonctionById($salarie->getNumFonc());
         ?>
         <h1>Détail sur le salarié <?php echo $salarie->getNom(); ?></h1>
-        <table>
+        <table class="table table table-bordered table-striped table-condensed">
             <tr>
                 <th>Prénom</th>
                 <th>Mail</th>
@@ -68,7 +68,7 @@ if (isset($_GET['id'])) {
 } else {
     ?>
     <h1>Liste des Personnes</h1>
-    <table>
+    <table class="table table table-bordered table-striped table-condensed">
         <tr>
             <th>Numéro</th>
             <th>Nom</th>

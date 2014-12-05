@@ -2,10 +2,14 @@
 <?php
 if (empty($_POST['nomVille']) and empty($_POST['ajouter'])) {
     ?>
-    <form action="#" method="POST">
-        <label for="nomVille">Nom de la ville :</label>
-        <input type="text" id="nomVille" name="nomVille">
-        <input type="submit" id="ajouter" value="Ajouter">
+    <form action="#" method="POST" class="col-lg-6">
+        <div class="form-group ">
+            <label for="nomVille">Nom de la ville</label>
+             <input type="text" id="nomVille" name="nomVille" class="form-control ">
+        </div>
+        <div class="form-group">
+            <input type="submit" id="ajouter" value="Ajouter" class="btn btn-default">
+        </div>
     </form>
     <?php
 } else {
@@ -16,12 +20,16 @@ if (empty($_POST['nomVille']) and empty($_POST['ajouter'])) {
     $maVille = new Ville($ville);
     $myVilleManager = new VilleManager($bdd);
     if ($myVilleManager->existeVille($_POST['nomVille'])) {
-        echo'La ville existe déjà.';
+        echo'<p>La ville existe déjà.</p>';
         ?>
-        <form action="#" method="POST">
-            <label for="nomVille">Nom de la ville :</label>
-            <input type="text" id="nomVille" name="nomVille">
-            <input type="submit" id="ajouter" value="Ajouter">
+        <form action="#" method="POST" class="col-lg-6">
+            <div class="form-group" >
+            <label for="nomVille">Nom de la ville</label>
+            <input type="text" id="nomVille" name="nomVille" class="form-control">
+            </div>
+            <div class="form-group">
+            <input type="submit" id="ajouter" value="Ajouter" class="btn btn-default">
+            </div>
         </form>
         <?php
     } else {

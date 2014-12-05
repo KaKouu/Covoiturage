@@ -61,7 +61,7 @@ if (isset($_POST['ville_de_depart'])) {
         $myVilleManager = new VilleManager($bdd);
         $myPersonneManager = new PersonneManager($bdd);
         ?>
-        <table>
+        <table class="table table table-bordered table-striped table-condensed">
             <tr>
                 <th>Ville Départ</th>
                 <th>Ville Arrivée</th>
