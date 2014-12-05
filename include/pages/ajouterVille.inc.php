@@ -5,10 +5,10 @@ if (empty($_POST['nomVille']) and empty($_POST['ajouter'])) {
     <form action="#" method="POST" class="col-lg-6">
         <div class="form-group ">
             <label for="nomVille">Nom de la ville</label>
-             <input type="text" id="nomVille" name="nomVille" class="form-control ">
+            <input type="text" id="nomVille" name="nomVille" class="form-control " required="">
         </div>
         <div class="form-group">
-            <input type="submit" id="ajouter" value="Ajouter" class="btn btn-default">
+            <input type="submit" id="ajouter" value="Ajouter" class="btn btn-primary">
         </div>
     </form>
     <?php
@@ -20,22 +20,22 @@ if (empty($_POST['nomVille']) and empty($_POST['ajouter'])) {
     $maVille = new Ville($ville);
     $myVilleManager = new VilleManager($bdd);
     if ($myVilleManager->existeVille($_POST['nomVille'])) {
-        echo'<p>La ville existe déjà.</p>';
+        echo'<p><img src="image/erreur.png" alt="erreur" > La ville existe déjà.</p>';
         ?>
         <form action="#" method="POST" class="col-lg-6">
             <div class="form-group" >
-            <label for="nomVille">Nom de la ville</label>
-            <input type="text" id="nomVille" name="nomVille" class="form-control">
+                <label for="nomVille">Nom de la ville</label>
+                <input type="text" id="nomVille" name="nomVille" class="form-control" required>
             </div>
             <div class="form-group">
-            <input type="submit" id="ajouter" value="Ajouter" class="btn btn-default">
+                <input type="submit" id="ajouter" value="Ajouter" class="btn btn-primary">
             </div>
         </form>
         <?php
     } else {
         $retour = $myVilleManager->add($maVille);
         if ($retour != 0) {
-            echo'<p>La ville ' . $_POST['nomVille'] . ' est ajoutée.</p>';
+            echo'<p><img src="image/valid.png" alt="valide" > La ville ' . $_POST['nomVille'] . ' est ajoutée.</p>';
         } else {
             echo'<p>Erreur</p>';
         }

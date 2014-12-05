@@ -17,33 +17,39 @@ if (!isset($_SESSION['PersIdentifiee'])) {
         //la ville de depart a été selectionnée
         if ($_POST['vil_depart'] != '') {
             ?>
-            <p>Votre de ville de départ :<b> 
+            <p>Votre de ville de départ<b> 
                     <?php echo $myVilleManager->getVilleById($_POST['vil_depart'])->getVilNom(); ?></b></p>
-            <form action="#" method="POST" id="form_Tajet">
-                <label for='vil_arrive'>Ville d'arrivée : </label>
-                <select name="vil_arrive" id="vil_arrive">
-                    <option value="">Selectionner une ville d'arrivée</option>
-                    <?php
-                    $villesParcours = $myTrajetManager->getAllVilleInParcours($_POST['vil_depart']);
-                    foreach ($villesParcours as $values) {
-                        if ($values->getVilNum() != $_POST['vil_depart']) {
-                            echo '<option value="' . $values->getVilNum() . '">' . $values->getVilNom() . ' </option>' . "\n";
+            <form class="col-lg-6" action="#" method="POST" id="form_Tajet">
+                <div class="form-group">
+                    <label for='vil_arrive'>Ville d'arrivée</label>
+                    <select class="form-control" name="vil_arrive" id="vil_arrive">
+                        <option value="">Selectionner une ville d'arrivée</option>
+                        <?php
+                        $villesParcours = $myTrajetManager->getAllVilleInParcours($_POST['vil_depart']);
+                        foreach ($villesParcours as $values) {
+                            if ($values->getVilNum() != $_POST['vil_depart']) {
+                                echo '<option value="' . $values->getVilNum() . '">' . $values->getVilNom() . ' </option>' . "\n";
+                            }
                         }
-                    }
-                    ?>
-                </select>
-                <br>
+                        ?>
+                    </select>
+                </div>
                 <input type="hidden" id="ville_depart" name="ville_depart" value="<?php echo $_POST['vil_depart']; ?>">
-                <label for="">Date de départ : </label>
-                <input type="text" id="date_depat" name="date_depart"  value="<?php echo date("d/m/Y"); ?>">
-                <br>
-                <label for="">Heure de départ : </label>
-                <input type="text" id="heure_depart" name="heure_depart" value="<?php echo date("H:i:s"); ?>">
-                <br>
-                <label for="">Nombre de place : </label>
-                <input type="number" id="nb_place" name="nb_place" value="0">
-                <br>
-                <input type="submit" name="ajouter_trajet" id ="ajouter_trajet" value="Ajouter">
+                <div class="form-group">
+                    <label for="date_depat">Date de départ</label>
+                    <input class="form-control" type="text" id="date_depat" name="date_depart"  value="<?php echo date("d/m/Y"); ?> " required>
+                </div>
+                <div class="form-group">
+                    <label for="heure_depart">Heure de départ</label>
+                    <input class="form-control" type="text" id="heure_depart" name="heure_depart" value="<?php echo date("H:i:s"); ?>" required>
+                </div>
+                <div class="form-group">
+                    <label for="nb_place">Nombre de place</label>
+                    <input class="form-control" type="number" id="nb_place" name="nb_place" value="0" required>
+                </div>
+                <div class="form-group">
+                    <input class="btn btn-primary" type="submit" name="ajouter_trajet" id ="ajouter_trajet" value="Ajouter" >
+                </div>
             </form>
             <?php
         } else {
@@ -96,18 +102,21 @@ if (!isset($_SESSION['PersIdentifiee'])) {
         $villesParcours = $myTrajetManager->getAllVilleParcours();
         ?>
         <p>Sélectionner le trajet que vous souhaitez effectuer</p>
-        <form action="#" method="POST" id="form_Tajet">
-            <label for='vil_depart'>Ville de départ : </label>
-            <select name="vil_depart" id="vil_depart" onchange="document.forms['form_Tajet'].submit();">
-                <option value="">Sélectionner une ville de départ</option>
-                <?php
-                foreach ($villesParcours as $values) {
-                    echo '<option value="' . $values->getVilNum() . '">' . $values->getVilNom() . ' </option>' . "\n";
-                }
-                ?>
-            </select>
-            <?php
-        }
+        <form class="col-lg-6" action="#" method="POST" id="form_Tajet">
+            <div class="form-group">
+                <label  for='vil_depart'>Ville de départ</label>
+                <select class="form-control" name="vil_depart" id="vil_depart" onchange="document.forms['form_Tajet'].submit();">
+                    <option value="">Sélectionner une ville de départ</option>
+                    <?php
+                    foreach ($villesParcours as $values) {
+                        echo '<option value="' . $values->getVilNum() . '">' . $values->getVilNom() . ' </option>' . "\n";
+                    }
+                    ?>
+                </select>
+            </div>
+        </form>
+        <?php
     }
-    ?>
+}
+?>
     

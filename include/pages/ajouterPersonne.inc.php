@@ -8,15 +8,15 @@ if (isset($_POST['statut']) or isset($_POST['etudiant']) or isset($_POST['salari
         $personneControle = new PersonneManager($bdd);
         if ($personneControle->getPersByLogin($_POST['login'])->getNum() != NULL) {
             //par le login
-            echo '<p>Le login existe déjà.</p>';
+            echo '<p><img src="image/erreur.png" alt="erreur" > Le login existe déjà.</p>';
         } elseif ($personneControle->getPersByMail($_POST['mail'])->getNum() != NULL) {
             //par le mail
-            echo '<p>Le mail est déjà utilisé.</p>';
+            echo '<p><img src="image/erreur.png" alt="erreur" > Le mail est déjà utilisé.</p>';
         } elseif ($personneControle->getPersByName($_POST['nom'], $_POST['prenom'])->getNum() != NULL AND $personneControle->getPersByMail($_POST['mail'])->getNum() != NULL) {
             // par les nom, prenom et mail
             // on ne peut pas arreter le test au nom et au prenom de la personne 
             // du coup pour vérifier si elle est bien unique on vérifie aussi le mail
-            echo '<p>Cette personne existe.</p>';
+            echo '<p><img src="image/erreur.png" alt="erreur" > Cette personne existe.</p>';
             echo'<p>Connectez-vous : <a href="?page=11">connexion</a></p>';
         } else {
             //la personne est bien unique
@@ -35,24 +35,30 @@ if (isset($_POST['statut']) or isset($_POST['etudiant']) or isset($_POST['salari
                 $myDivisionManager = new DivisionManager($bdd);
                 $division = $myDivisionManager->getAllDiv();
                 ?>
-                <form method="POST" action="#">
-                    <select name="departement" id="departement">
-                        <option value="">Selectionner un département</option>
-                        <?php
-                        foreach ($departements as $values) {
-                            echo '<option value="' . $values->getDepNum() . '">' . $values->getDepNom() . '</option>' . "\n";
-                        }
-                        ?>
-                    </select>
-                    <select name="division" id="division">
-                        <option value="">Selectionner votre classe</option>
-                        <?php
-                        foreach ($division as $values) {
-                            echo '<option value="' . $values->getDivNum() . '">' . $values->getDivNom() . '</option>' . "\n";
-                        }
-                        ?>
-                    </select>
-                    <input type="submit" name="etudiant" value="Valider">
+                <form class="col-lg-6" method="POST" action="#">
+                    <div class="form-group">
+                        <label for="departement">Votre département</label>
+                        <select class="form-control" name="departement" id="departement">
+                            <?php
+                            foreach ($departements as $values) {
+                                echo '<option value="' . $values->getDepNum() . '">' . $values->getDepNom() . '</option>' . "\n";
+                            }
+                            ?>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="departement">Votre division</label>
+                        <select class="form-control" name="division" id="division">
+                            <?php
+                            foreach ($division as $values) {
+                                echo '<option value="' . $values->getDivNum() . '">' . $values->getDivNom() . '</option>' . "\n";
+                            }
+                            ?>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <input type="submit" name="etudiant" class="btn btn-primary" value="Valider">
+                    </div>
                 </form>
                 <?php
             } else {
@@ -60,20 +66,24 @@ if (isset($_POST['statut']) or isset($_POST['etudiant']) or isset($_POST['salari
                 $myFonctionManager = new FonctionManager($bdd);
                 $fonction = $myFonctionManager->getAllFonction();
                 ?>
-                <form method="POST" action="#">
-                    <label for="sal_telprof">Téléphone professionnel :</label>
-                    <input type="tel" name="sal_telprof" >
-                    <br>
-                    <label for="fonction">Votre fonction :</label>
-                    <select name="fonction" id="fonction">
-                        <?php
-                        foreach ($fonction as $values) {
-                            echo '<option value="' . $values->getNum() . '">' . $values->getLibelle() . '</option>' . "\n";
-                        }
-                        ?>
-                    </select>
-                    <br>
-                    <input type="submit" name="salarie" value="Valider">
+                <form class="col-lg-6" method="POST" action="#">
+                    <div class="form-group">
+                        <label for="sal_telprof">Téléphone professionnel</label>
+                        <input class="form-control" type="tel" name="sal_telprof" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="fonction">Votre fonction</label>
+                        <select class="form-control" name="fonction" id="fonction">
+                            <?php
+                            foreach ($fonction as $values) {
+                                echo '<option value="' . $values->getNum() . '">' . $values->getLibelle() . '</option>' . "\n";
+                            }
+                            ?>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <input class="btn btn-primary" type="submit" name="salarie" value="Valider">
+                    </div>
                 </form>
                 <?php
             }
@@ -88,14 +98,14 @@ if (isset($_POST['statut']) or isset($_POST['etudiant']) or isset($_POST['salari
             $myEtudiant = new Etudiant($_SESSION['personne']);
             $retour = $myEtudiantManager->add($myEtudiant);
             if ($retour != 0) {
-                echo'<p>Personne ajoutée.</p>';
-                echo'<p>Vous pouvez maintenant vous connecter :<a href="?page=11">connexion</a>.</p>';
+                echo'<p><img src="image/valid.png" alt="valide" > Personne ajoutée.</p>';
+                echo'<p>Vous pouvez maintenant vous connecter : <a href="?page=11">Connexion</a>.</p>';
             } else {
-                echo"<p>Erreur.</p>";
+                echo'<p><img src="image/erreur.png" alt="erreur" > Erreur.</p>';
             }
         } else {
-            echo '<p>Cette personne existe déjà</p>';
-            echo'<p>Connectez-vous : <a href="?page=11">connexion</a></p>';
+            echo '<p><img src="image/erreur.png" alt="erreur" > Cette personne existe déjà</p>';
+            echo'<p>Connectez-vous : <a href="?page=11">Connexion</a></p>';
         }
     } else {
         $personneControle = new PersonneManager($bdd);
@@ -107,44 +117,53 @@ if (isset($_POST['statut']) or isset($_POST['etudiant']) or isset($_POST['salari
             $mySalarie = new Salarie($_SESSION['personne']);
             $retour = $mySalarieManager->add($mySalarie);
             if ($retour != 0) {
-                echo'<p>Personne ajoutée.</p>';
-                echo'<p>Vous pouvez maintenant vous connecter : <a href="?page=11">connexion</a>.</p>';
+                echo'<p><img src="image/valid.png" alt="valide" > Personne ajoutée.</p>';
+                echo'<p>Vous pouvez maintenant vous connecter : <a href="?page=11">Connexion</a>.</p>';
             } else {
-                echo "<p>Erreur.</p>";
+                echo '<p><img src="image/erreur.png" alt="erreur" > Erreur.</p>';
             }
         } else {
-            echo '<p>Cette personne existe déjà.</p>';
-            echo'<p>Connectez-vous : <a href="?page=11">connexion</a>.</p>';
+            echo '<p><img src="image/erreur.png" alt="erreur" > Cette personne existe déjà.</p>';
+            echo'<p>Connectez-vous : <a href="?page=11">Connexion</a>.</p>';
         }
     }
 } else {
     ?>      
-    <form method="POST" action="#">
-        <label for="nom">Nom : </label>
-        <input type="text" name="nom" id="nom" required>
-        <br>
-        <label for="prenom">Prénom : </label>
-        <input type="text" name="prenom" id="prenom" required>
-        <br>
-        <label for="tel">Téléphone : </label>
-        <input type="tel" name="tel" id="tel">
-        <br>
-        <label for="mail">Email : </label>
-        <input type="email" name="mail" id="mail" required>
-        <br>
-        <label for="login">Login : </label>
-        <input type="text" name="login" id="login" required>
-        <br>
-        <label for="password">Password : </label>
-        <input type="password" name="password" id="password" required>
-        <br>
+    <form class="col-lg-6"  method="POST" action="#">
+        <div class="form-group">
+            <label for="nom">Nom</label>
+            <input class="form-control" type="text" name="nom" id="nom" required>
+        </div>
+        <div class="form-group">
+            <label for="prenom">Prénom</label>
+            <input class="form-control" type="text" name="prenom" id="prenom" required>
+        </div>
+        <div class="form-group">
+            <label for="tel">Téléphone</label>
+            <input class="form-control" type="tel" name="tel" id="tel">
+        </div>
+        <div class="form-group">
+            <label for="mail">Email</label>
+            <input class="form-control" type="email" name="mail" id="mail" required>
+        </div>
+        <div class="form-group">
+            <label for="login">Login</label>
+            <input class="form-control" type="text" name="login" id="login" required>
+        </div>
+        <div class="form-group">
+            <label for="password">Password</label>
+            <input class="form-control" type="password" name="password" id="password" required>
+        </div>
         <p>Votre Statut : </p>
-        <label for="etudiant">Etudiant</label>
-        <input type="radio" name="statut" id="etudiant" value="1" required>
-        <label for="salarie">Salarié</label>
-        <input type="radio" name="statut" id="salarie" value="2" required>
-        <br>                                                     
-        <input type="submit" name="continuer" value="Continuer" >
+        <div class="form-group">
+            <label for="etudiant">Etudiant</label>
+            <input type="radio" name="statut" id="etudiant" value="1" checked>        
+            <label for="salarie">Salarié</label>
+            <input class="form-"type="radio" name="statut" id="salarie" value="2" >
+        </div>     
+        <div class="form-group">
+            <input class="btn btn-primary" type="submit" name="continuer" value="Continuer" >
+        </div>
     </form>
     <?php
 }

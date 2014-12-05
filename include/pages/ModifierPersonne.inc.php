@@ -22,9 +22,9 @@ if (!isset($_SESSION['PersIdentifiee'])) {
                 if ($_POST['mail'] != $_SESSION['PersIdentifiee']->getMail()) {
                     // l'utilisateur souhaite modifier son mail
                     //on verifie si il est disponible
-                    if ($personneControle->getPersByMail($_POST['mail'])->getNum()!= NULL) {
+                    if ($personneControle->getPersByMail($_POST['mail'])->getNum() != NULL) {
                         //le mail existe déja
-                        $controle=false;
+                        $controle = false;
                         echo "<p>Le mail est déjà utilisé par une autre personne</p>";
                     } else {
                         //le mail est libre, on le modifie dans l'objet
@@ -45,7 +45,7 @@ if (!isset($_SESSION['PersIdentifiee'])) {
                 }
             }
         } else {
-            $controle=true;
+            $controle = true;
             //modification des infos de connexion : login et mdp
             if ($_POST['login'] != $_SESSION['PersIdentifiee']->getLogin() or $_POST['mdp'] != "De$0µl£") {
                 //une information a été changée
@@ -54,19 +54,19 @@ if (!isset($_SESSION['PersIdentifiee'])) {
                     //on verifie si il n'existe pas dans la bdd
                     if ($personneControle->getPersByLogin($_POST['login'])->getNum() != NULL) {
                         //le login est déja dans la base de données
-                        $controle=false;
+                        $controle = false;
                         echo '<p>Le login existe déja.</p>';
                     } else {
                         //le login est libre
                         $_SESSION['PersIdentifiee']->setLogin($_POST['login']);
                     }
                 }
-                if (sha1(sha1($_POST['mdp'].SAL)) != $_SESSION['PersIdentifiee']->getPwd() ) {
+                if (sha1(sha1($_POST['mdp'] . SAL)) != $_SESSION['PersIdentifiee']->getPwd()) {
                     //le mot de passe a été modifié
                     $_SESSION['PersIdentifiee']->setPwd($_POST['mdp']);
                 }
                 //update dans la bdd
-                if ($controle) {                 
+                if ($controle) {
                     //on update la bdd
                     $personneControle->setPersonneConnexion($_SESSION['PersIdentifiee'], $_SESSION['PersIdentifiee']->getNum());
                     //toutes les modifications ont été effectuées
@@ -77,30 +77,40 @@ if (!isset($_SESSION['PersIdentifiee'])) {
     }
     ?>
     <h2>Modifier votre identité</h2>
-    <form action="#" method="POST">
-        <label for="" >Nom</label>
-        <input type="text" name="nom" value="<?php echo $_SESSION['PersIdentifiee']->getNom(); ?>">
-        <br>
-        <label for="" >Prénom</label>
-        <input type="text" name="prenom"  value="<?php echo $_SESSION['PersIdentifiee']->getPrenom(); ?>">
-        <br>
-        <label for="" >Mail</label>
-        <input type="text" name="mail"  value="<?php echo $_SESSION['PersIdentifiee']->getMail(); ?>">
-        <br>
-        <label for="" >Téléphone</label>
-        <input type="text" name="tel" value="<?php echo $_SESSION['PersIdentifiee']->getTel(); ?>">
-        <br>
-        <input type="submit" name="identite" value="Modifier">
+    <form class="col-lg-6" action="#" method="POST">
+        <div class="form-group">
+            <label for="nom" >Nom</label>
+            <input class="form-control" type="text" name="nom" value="<?php echo $_SESSION['PersIdentifiee']->getNom(); ?>" required>
+        </div>
+        <div class="form-group">
+            <label for="prenom" >Prénom</label>
+            <input class="form-control" type="text" name="prenom"  value="<?php echo $_SESSION['PersIdentifiee']->getPrenom(); ?>" required>
+        </div>
+        <div class="form-group">
+            <label for="mail" >Mail</label>
+            <input class="form-control" type="text" name="mail"  value="<?php echo $_SESSION['PersIdentifiee']->getMail(); ?>" required>
+        </div>
+        <div class="form-group">
+            <label for="tel" >Téléphone</label>
+            <input class="form-control" type="text" name="tel" value="<?php echo $_SESSION['PersIdentifiee']->getTel(); ?>" required>
+        </div>
+        <div class="form-group">    
+            <input class="btn btn-primary" type="submit" name="identite" value="Modifier">
+        </div>
     </form>
     <h2>Modifier vos informations de connexion</h2>
-    <form action="#" method="POST">
-        <label for="">Login</label>
-        <input type="text" name="login" value="<?php echo $_SESSION['PersIdentifiee']->getLogin(); ?>">
-        <br>
-        <label for="">Mot de passe</label>
-        <input type="password" name="mdp" value="De$0µl£">
-        <br>
-        <input type="submit" name="authentification" value="Modifier">
+    <form class="col-lg-6" action="#" method="POST">
+        <div class="form-group">
+            <label for="login">Login</label>
+            <input class="form-control" type="text" name="login" value="<?php echo $_SESSION['PersIdentifiee']->getLogin(); ?>" required>
+        </div>
+        <div class="form-group">
+            <label for="mdp">Mot de passe</label>
+            <input class="form-control" type="password" name="mdp" value="De$0µl£" required>
+        </div>
+        <div class="form-group">
+            <input class="btn btn-primary" type="submit" name="authentification" value="Modifier">
+        </div>
     </form>
     <?php
 }
