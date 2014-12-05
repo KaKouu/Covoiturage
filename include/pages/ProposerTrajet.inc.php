@@ -4,8 +4,8 @@ require 'include/functions.inc.php';
 if (!isset($_SESSION['PersIdentifiee'])) {
     ?>
     <p>Vous devez être authentifié pour pouvoir proposer un trajet.</p> 
-    <a href="index.php?page=11">Connexion</a>
-    <a href="index.php?page=1">Inscrption</a>
+    <a class="btn btn-info" href="index.php?page=11">Connexion</a>
+    <a class="btn btn-info" href="index.php?page=1">Inscrption</a>
     <?php
 } else {
 

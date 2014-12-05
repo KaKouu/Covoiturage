@@ -65,7 +65,7 @@ if (isset($_POST['valider'])) {
             <input class="form-control" type='number' name='reponse' id='reponse'>
         </div>
         <div class="form-group">
-            <input class="btn btn-primary" type='submit' name='valider' id='valider'>
+            <input class="btn btn-primary" type='submit' name='valider' id='valider' value="Connexion">
         </div>
     </form>
     <?php

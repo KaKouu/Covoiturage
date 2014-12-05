@@ -12,7 +12,7 @@ $villes = $myVilleManager->getAllVille();
 //on affiche toutes les villes
     foreach ($villes as $values) {
         echo '<tr><td>' . $values->getVilNum() . '</td>';
-        echo '<td>' . $values->getVilNom() . '</td></tr>';
+        echo '<td>' . $values->getVilNom() . '</td></tr>' . "\n";
         $i++;
     }
     ?>

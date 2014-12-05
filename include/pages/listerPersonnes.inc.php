@@ -78,11 +78,11 @@ if (isset($_GET['id'])) {
         <?php
         //recupération de la liste de toutes les personnes
         $personnes = $myPersonneManager->getAllPers();
-        echo '<p>Actuellement ' . count($personnes) . ' personnes enregistrées<p>';
+        echo '<p>Actuellement ' . count($personnes) . ' personnes enregistrées<p>'."\n";
         foreach ($personnes as $value) {
             echo '<tr><td><b><a href=?page=2&id=' . $value->getNum() . "> " . $value->getNum() . "</a></b></td>";
             echo '<td> ' . $value->getNom() . '</td>';
-            echo '<td>' . $value->getPrenom() . '</td></tr>';
+            echo '<td>' . $value->getPrenom() . '</td></tr>'."\n";
         }
         ?>
     </table>

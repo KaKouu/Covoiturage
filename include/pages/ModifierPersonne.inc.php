@@ -4,8 +4,8 @@ $personneControle = new PersonneManager($bdd);
 if (!isset($_SESSION['PersIdentifiee'])) {
     ?>
     <p>Vous devez être connecté pour pouvoir modifier les informations de votre profil</p> 
-    <a href="index.php?page=11">Connexion</a>
-    <a href="index.php?page=1">Inscrption</a>
+    <a class=" btn btn-info" href="index.php?page=11">Connexion</a>
+    <a class="btn btn-info" href="index.php?page=1">Inscrption</a>
     <?php
 } else {
     if (isset($_POST['identite']) or isset($_POST['authentification'])) {

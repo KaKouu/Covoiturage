@@ -15,9 +15,9 @@ $parcours = $myParcoursManager->getAllParcours();
     foreach ($parcours as $values) {
         $ville1 = $myVilleManager->getVilleById($values->getVilNum1());
         $ville2 = $myVilleManager->getVilleById($values->getVilNum2());
-        echo '<tr><td>' . $i . '</td>' . "\n";
-        echo '<td>' . $ville1->getVilNom() . '</td>' . "\n";
-        echo '<td>' . $ville2->getVilNom() . '</td>' . "\n";
+        echo '<tr><td>' . $i . '</td>';
+        echo '<td>' . $ville1->getVilNom() . '</td>';
+        echo '<td>' . $ville2->getVilNom() . '</td>';
         echo '<td>' . $values->getParKm() . ' km</td></tr>' . "\n";
         $i++;
     }

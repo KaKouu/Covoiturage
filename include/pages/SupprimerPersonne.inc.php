@@ -3,7 +3,7 @@
 if (!isset($_SESSION['PersIdentifiee'])) {
     ?>
     <p>Vous devez être connecté pour pouvoir supprimer les informations de votre profil</p> 
-    <a href="index.php?page=11">Connexion</a>
+    <a class="btn btn-info" href="index.php?page=11">Connexion</a>
     <?php
 } else {
     if (isset($_POST['supprimer'])) {
@@ -12,8 +12,8 @@ if (!isset($_SESSION['PersIdentifiee'])) {
         <p>Voulez vous vraiment supprimer vos données ? <br>
             <i>Attention cette action est irreversible.</i></p>
         <form action="#" method="POST">
-            <input type="submit" name="oui" id="oui" value="Oui">
-            <input type="submit" name="non" id="non" value="Non">
+            <input class="btn btn-success" type="submit" name="oui" id="oui" value="Oui">
+            <a class="btn btn-warning" href="index.php">Non</a>
         </form>
         <?php
     } else if (isset($_POST['oui'])) {
@@ -35,16 +35,14 @@ if (!isset($_SESSION['PersIdentifiee'])) {
         }
         //enfin suppression des informations de la personne
         $myPersonneManager->deletePersonne($_SESSION['PersIdentifiee']->getNum());
-        header("location:?page=12");
+        session_destroy();
+        echo '<p><img src="image/valid.png" alt="valide" > Toutes vos informations viennent d\'être supprimées du site</p>';
         
-    } else if (isset($_POST['non'])) {
-        //on redirige vers la page d'accueil'
-        header("location:index.php?page=0");
     } else {
         ?>
         <br>
         <form action="#" method="POST">
-            <input type="submit" id="supprimer" name="supprimer" value="Supprimer toutes les informations">
+            <input class="btn btn-danger" type="submit" id="supprimer" name="supprimer" value="Supprimer toutes les informations">
         </form>
         <?php
     }
